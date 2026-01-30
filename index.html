@@ -57,6 +57,14 @@
         <option value="all">全部</option>
       </select>
       &nbsp;&nbsp;&nbsp;
+      <label for="timezone">时区：</label>
+      <select id="timezone" onchange="updateChart()">
+        <option value="local">本地时间</option>
+        <option value="utc">UTC时间</option>
+        <option value="us">美国东部时间</option>
+        <option value="cn">中国时间</option>
+      </select>
+      &nbsp;&nbsp;&nbsp;
       <label for="timeWindow">时间窗口：</label>
       <select id="timeWindow" onchange="updateChart()">
         <option value="7">最近7天</option>
@@ -154,6 +162,67 @@
       return data.filter(item => item.site === site);
     }
 
+    // 根据时区转换时间
+    function convertTimezone(date, timezone) {
+      const options = {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+      };
+
+      switch (timezone) {
+        case 'utc':
+          return date.toLocaleString('en-US', { ...options, timeZone: 'UTC' });
+        case 'us':
+          return date.toLocaleString('en-US', { ...options, timeZone: 'America/New_York' });
+        case 'cn':
+          return date.toLocaleString('zh-CN', { ...options, timeZone: 'Asia/Shanghai' });
+        case 'local':
+        default:
+          return date.toLocaleString('zh-CN', options);
+      }
+    }
+
+    // 格式化时间用于图表标签
+    function formatTimeForLabel(date, timezone, timeDimension) {
+      const options = {
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+      };
+
+      let timeZone;
+      switch (timezone) {
+        case 'utc':
+          timeZone = 'UTC';
+          break;
+        case 'us':
+          timeZone = 'America/New_York';
+          break;
+        case 'cn':
+          timeZone = 'Asia/Shanghai';
+          break;
+        case 'local':
+        default:
+          timeZone = undefined;
+      }
+
+      const convertedDate = new Date(date.toLocaleString('en-US', { ...options, timeZone }));
+      
+      if (timeDimension === 'hour') {
+        // 小时级别：显示 月/日 时:00
+        return `${convertedDate.getMonth() + 1}/${convertedDate.getDate()} ${String(convertedDate.getHours()).padStart(2, '0')}:00`;
+      } else {
+        // 天级别：显示 月/日
+        return `${convertedDate.getMonth() + 1}/${convertedDate.getDate()}`;
+      }
+    }
+
     // 根据时间窗口过滤数据
     function filterDataByTimeWindow(data, days) {
       if (days === 'all') {
@@ -170,12 +239,13 @@
     // 更新图表
     function updateChart() {
       const site = document.getElementById('site').value;
+      const timezone = document.getElementById('timezone').value;
       const timeWindow = document.getElementById('timeWindow').value;
       const timeDimension = document.getElementById('timeDimension').value;
       loadData().then(data => {
         const siteFilteredData = filterDataBySite(data, site);
         const filteredData = filterDataByTimeWindow(siteFilteredData, timeWindow);
-        drawTrendChart(filteredData, timeDimension);
+        drawTrendChart(filteredData, timeDimension, timezone);
       });
     }
 
@@ -194,6 +264,11 @@
         timeWindow30: '最近30天',
         timeWindow90: '最近90天',
         timeWindowAll: '全部',
+        timezone: '时区：',
+        timezoneLocal: '本地时间',
+        timezoneUTC: 'UTC时间',
+        timezoneUS: '美国东部时间',
+        timezoneCN: '中国时间',
         timeDimension: '时间维度：',
         hourLevel: '小时级别',
         dayLevel: '天级别（平均值）',
@@ -219,6 +294,11 @@
         timeWindow30: 'Last 30 Days',
         timeWindow90: 'Last 90 Days',
         timeWindowAll: 'All',
+        timezone: 'Timezone: ',
+        timezoneLocal: 'Local Time',
+        timezoneUTC: 'UTC Time',
+        timezoneUS: 'US Eastern Time',
+        timezoneCN: 'China Time',
         timeDimension: 'Time Dimension: ',
         hourLevel: 'Hourly',
         dayLevel: 'Daily (Average)',
@@ -240,11 +320,12 @@
       // 重新加载数据和图表以更新文本
       loadData().then(data => {
         const site = document.getElementById('site').value;
+        const timezone = document.getElementById('timezone').value;
         const timeWindow = document.getElementById('timeWindow').value;
         const timeDimension = document.getElementById('timeDimension').value;
         const siteFilteredData = filterDataBySite(data, site);
         const filteredData = filterDataByTimeWindow(siteFilteredData, timeWindow);
-        drawTrendChart(filteredData, timeDimension);
+        drawTrendChart(filteredData, timeDimension, timezone);
       });
     }
 
@@ -259,6 +340,7 @@
       // 更新标签
       document.querySelector('label[for="language"]').textContent = lang.language;
       document.querySelector('label[for="site"]').textContent = lang.site;
+      document.querySelector('label[for="timezone"]').textContent = lang.timezone;
       document.querySelector('label[for="timeWindow"]').textContent = lang.timeWindow;
       document.querySelector('label[for="timeDimension"]').textContent = lang.timeDimension;
       
@@ -267,6 +349,13 @@
       siteSelect.options[0].text = lang.siteUS;
       siteSelect.options[1].text = lang.siteCN;
       siteSelect.options[2].text = lang.siteAll;
+      
+      // 更新时区选项
+      const timezoneSelect = document.getElementById('timezone');
+      timezoneSelect.options[0].text = lang.timezoneLocal;
+      timezoneSelect.options[1].text = lang.timezoneUTC;
+      timezoneSelect.options[2].text = lang.timezoneUS;
+      timezoneSelect.options[3].text = lang.timezoneCN;
       
       // 更新时间窗口选项
       const timeWindowSelect = document.getElementById('timeWindow');
@@ -282,7 +371,7 @@
     }
 
     // 绘制趋势图
-    function drawTrendChart(data, timeDimension) {
+    function drawTrendChart(data, timeDimension, timezone) {
       const ctx = document.getElementById('trendChart').getContext('2d');
       
       if (data.length === 0) {
@@ -301,14 +390,10 @@
       // 提取所有问题名称
       const problemNames = processedData[0].problems.map(p => p.name);
       
-      // 准备图表数据
+      // 准备图表数据，使用时区转换
       const labels = processedData.map(item => {
         const date = new Date(item.timestamp);
-        if (timeDimension === 'hour') {
-          return `${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:00`;
-        } else {
-          return `${date.getMonth() + 1}/${date.getDate()}`;
-        }
+        return formatTimeForLabel(date, timezone, timeDimension);
       });
       
       const datasets = problemNames.map((name, index) => {
@@ -405,11 +490,12 @@
       
       const data = await loadData();
       const site = document.getElementById('site').value;
+      const timezone = document.getElementById('timezone').value;
       const timeWindow = document.getElementById('timeWindow').value;
       const timeDimension = document.getElementById('timeDimension').value;
       const siteFilteredData = filterDataBySite(data, site);
       const filteredData = filterDataByTimeWindow(siteFilteredData, timeWindow);
-      drawTrendChart(filteredData, timeDimension);
+      drawTrendChart(filteredData, timeDimension, timezone);
     }
 
     // 页面加载完成后初始化
