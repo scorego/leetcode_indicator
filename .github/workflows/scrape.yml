@@ -23,13 +23,18 @@ jobs:
           python-version: '3.9'
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          pip install -r requirements.txt
+          pip install playwright
+      - name: Install Playwright browsers
+        run: |
+          python -m playwright install --with-deps
 
-      - name: Run scraper for US site
-        run: python scraper.py us
+      - name: Run Playwright scraper for US site
+        run: python scraper_playwright.py us
 
-      - name: Run scraper for China site
-        run: python scraper.py cn
+      - name: Run Playwright scraper for China site
+        run: python scraper_playwright.py cn
 
       - name: Commit and push changes
         run: |
