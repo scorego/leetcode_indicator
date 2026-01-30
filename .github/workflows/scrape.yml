@@ -1,0 +1,34 @@
+name: Scrape LeetCode Online Users
+
+on:
+  schedule:
+    # 每半小时执行一次
+    - cron: '*/30 * * * *'
+  # 允许手动触发
+  workflow_dispatch:
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run scraper
+        run: python scraper.py
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add data/online_users.json
+          git diff --cached --exit-code || git commit -m 'Update LeetCode online users data'
+          git push
