@@ -7,35 +7,58 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.3.1"></script>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+    :root{
+      --bg:#f3f7fb;
+      --card:#ffffff;
+      --muted:#6b7280;
+      --accent:#2563eb;
+      --glass: rgba(255,255,255,0.7);
+    }
+
+    *{box-sizing:border-box}
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
       margin: 0;
-      padding: 20px;
-      background-color: #f5f5f5;
+      padding: 28px;
+      background: linear-gradient(180deg,#eef6ff 0%, var(--bg) 100%);
+      color: #0f172a;
     }
     .container {
       max-width: 1200px;
       margin: 0 auto;
-      background-color: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      background: linear-gradient(180deg, rgba(255,255,255,0.9), var(--card));
+      padding: 22px;
+      border-radius: 14px;
+      box-shadow: 0 8px 30px rgba(16,24,40,0.08);
+      border: 1px solid rgba(16,24,40,0.04);
     }
     h1 {
       text-align: center;
-      color: #333;
+      color: #0b1220;
+      margin: 6px 0 4px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
     }
     .description {
       text-align: center;
-      color: #666;
-      margin-bottom: 30px;
+      color: var(--muted);
+      margin-bottom: 18px;
+      font-size: 14px;
     }
-    .chart-container {
-      position: relative;
-      height: 400px;
-      margin-bottom: 40px;
-    }
+    .controls { text-align:center; margin-bottom:18px; }
+    .control-item{ display:inline-flex; align-items:center; gap:8px; margin:6px 10px; }
+    label{ font-weight:600; color:var(--muted); font-size:13px }
+    select{ padding:8px 10px; border-radius:8px; border:1px solid rgba(15,23,42,0.08); background:var(--glass); min-width:150px }
+    button{ padding:8px 12px; border-radius:8px; border:none; cursor:pointer; background:var(--accent); color:white; font-weight:600 }
+    button.secondary{ background:#e6eefc; color:var(--accent); border:1px solid rgba(37,99,235,0.08) }
+    .chart-container { position:relative; height:420px; margin-bottom:18px; border-radius:10px; padding:12px; background:linear-gradient(180deg, rgba(250,250,255,0.6), rgba(250,252,255,0.6)); }
+    .overview-container{ height:110px; margin-top:10px; border-radius:8px; padding:8px; background:transparent }
+    canvas{ max-width:100%; }
+    @media (max-width:720px){ .controls .control-item{ display:block; margin:6px 0 } .chart-container{height:320px} }
   </style>
 </head>
 <body>
@@ -43,45 +66,48 @@
     <h1>LeetCode Indicator</h1>
     <p class="description">通过LeetCode题目在线人数反映程序员市场趋势</p>
     
-    <div style="text-align: center; margin-bottom: 20px;">
-      <label for="language">语言：</label>
-      <select id="language" onchange="changeLanguage()">
-        <option value="zh">中文</option>
-        <option value="en">English</option>
-      </select>
-      &nbsp;&nbsp;&nbsp;
-      <label for="site">站点：</label>
-      <select id="site" onchange="updateChart()">
-        <option value="us">LeetCode US</option>
-        <option value="cn">LeetCode China</option>
-        <option value="all">全部</option>
-      </select>
-      &nbsp;&nbsp;&nbsp;
-      <label for="timezone">时区：</label>
-      <select id="timezone" onchange="updateChart()">
-        <option value="local">本地时间</option>
-        <option value="utc">UTC时间</option>
-        <option value="us">美国东部时间</option>
-        <option value="cn">中国时间</option>
-      </select>
-      &nbsp;&nbsp;&nbsp;
-      <label for="timeWindow">时间窗口：</label>
-      <select id="timeWindow" onchange="updateChart()">
-        <option value="7">最近7天</option>
-        <option value="30" selected>最近30天</option>
-        <option value="90">最近90天</option>
-        <option value="all">全部</option>
-      </select>
-      &nbsp;&nbsp;&nbsp;
-      <label for="timeDimension">时间维度：</label>
-      <select id="timeDimension" onchange="updateChart()">
-        <option value="hour">小时级别</option>
-        <option value="day">天级别（平均值）</option>
-      </select>
+    <div class="controls">
+      <div class="control-item">
+        <label for="language">语言：</label>
+        <select id="language" onchange="changeLanguage()">
+          <option value="zh">中文</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+      <div class="control-item">
+        <label for="site">站点：</label>
+        <select id="site" onchange="updateChart()">
+          <option value="us">LeetCode US</option>
+          <option value="cn">LeetCode China</option>
+          <option value="all">全部</option>
+        </select>
+      </div>
+      <div class="control-item">
+        <label for="timezone">时区：</label>
+        <select id="timezone" onchange="updateChart()">
+          <option value="local">本地时间</option>
+          <option value="utc">UTC时间</option>
+          <option value="us">美国东部时间</option>
+          <option value="cn">中国时间</option>
+        </select>
+      </div>
+      <div class="control-item">
+        <label for="timeDimension">时间维度：</label>
+        <select id="timeDimension" onchange="updateChart()">
+          <option value="hour">小时级别</option>
+          <option value="day">天级别（最大值）</option>
+        </select>
+      </div>
     </div>
     
     <div class="chart-container">
       <canvas id="trendChart"></canvas>
+    </div>
+    <div class="chart-container overview-container" style="height:100px; margin-top:10px;">
+      <canvas id="overviewChart"></canvas>
+      <div style="text-align:right; margin-top:6px;">
+        <button id="resetRangeBtn" class="secondary" onclick="resetRange()">Reset Range</button>
+      </div>
     </div>
   </div>
 
@@ -100,57 +126,55 @@
       }
     }
 
-    // 聚合数据为天级别（计算平均值）
+    // 聚合数据为天级别（取每天最大值）
     function aggregateDataByDay(data) {
       if (data.length === 0) {
         return [];
       }
-      
+
       // 按天分组
       const groupedByDay = {};
       data.forEach(item => {
         const date = new Date(item.timestamp);
         const dayKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-        
+
         if (!groupedByDay[dayKey]) {
           groupedByDay[dayKey] = {
             timestamp: new Date(dayKey).toISOString(),
             problems: []
           };
         }
-        
-        // 合并问题数据
+
+        // 合并问题数据，保留每天的最大在线人数
         item.problems.forEach(problem => {
           const existingProblem = groupedByDay[dayKey].problems.find(p => p.name === problem.name);
           if (existingProblem) {
-            existingProblem.online_users_sum += problem.online_users;
-            existingProblem.count += 1;
+            existingProblem.online_users = Math.max(existingProblem.online_users, problem.online_users);
           } else {
             groupedByDay[dayKey].problems.push({
               name: problem.name,
               url: problem.url,
-              online_users_sum: problem.online_users,
-              count: 1
+              online_users: problem.online_users
             });
           }
         });
       });
-      
-      // 计算每天的平均值
+
+      // 构建结果数组
       const aggregatedData = Object.values(groupedByDay).map(dayData => {
         return {
           timestamp: dayData.timestamp,
           problems: dayData.problems.map(problem => ({
             name: problem.name,
             url: problem.url,
-            online_users: Math.round(problem.online_users_sum / problem.count)
+            online_users: problem.online_users
           }))
         };
       });
-      
+
       // 按时间排序
       aggregatedData.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
-      
+
       return aggregatedData;
     }
 
@@ -240,12 +264,10 @@
     function updateChart() {
       const site = document.getElementById('site').value;
       const timezone = document.getElementById('timezone').value;
-      const timeWindow = document.getElementById('timeWindow').value;
       const timeDimension = document.getElementById('timeDimension').value;
       loadData().then(data => {
         const siteFilteredData = filterDataBySite(data, site);
-        const filteredData = filterDataByTimeWindow(siteFilteredData, timeWindow);
-        drawTrendChart(filteredData, timeDimension, timezone);
+        drawTrendChart(siteFilteredData, timeDimension, timezone);
       });
     }
 
@@ -271,15 +293,16 @@
         timezoneCN: '中国时间',
         timeDimension: '时间维度：',
         hourLevel: '小时级别',
-        dayLevel: '天级别（平均值）',
+        dayLevel: '天级别（最大值）',
         onlineUsers: '在线人数',
         lastUpdated: '最后更新: ',
         chartTitleHour: 'LeetCode题目在线人数趋势 (小时级别)',
-        chartTitleDay: 'LeetCode题目在线人数趋势 (天级别平均值)',
+        chartTitleDay: 'LeetCode题目在线人数趋势 (天级别最大值)',
         chartXAxisHour: '时间（小时）',
         chartXAxisDay: '日期',
         chartYAxis: '在线人数',
-        noData: '暂无数据'
+        noData: '暂无数据',
+        resetRange: '重置范围'
       },
       en: {
         title: 'LeetCode Indicator',
@@ -301,16 +324,26 @@
         timezoneCN: 'China Time',
         timeDimension: 'Time Dimension: ',
         hourLevel: 'Hourly',
-        dayLevel: 'Daily (Average)',
+        dayLevel: 'Daily (Max)',
         onlineUsers: 'Online Users',
         lastUpdated: 'Last Updated: ',
         chartTitleHour: 'LeetCode Problem Online Users Trend (Hourly)',
-        chartTitleDay: 'LeetCode Problem Online Users Trend (Daily Average)',
+        chartTitleDay: 'LeetCode Problem Online Users Trend (Daily Max)',
         chartXAxisHour: 'Time (Hour)',
         chartXAxisDay: 'Date',
         chartYAxis: 'Online Users',
-        noData: 'No Data Available'
+        noData: 'No Data Available',
+        resetRange: 'Reset Range'
       }
+    };
+
+    // 问题元数据：LeetCode 题目编号与中文标题（可根据需要扩展）
+    const problemsMeta = {
+      'Two Sum': { id: 1, zh: '两数之和' },
+      'Add Two Numbers': { id: 2, zh: '两数相加' },
+      'Longest Substring Without Repeating Characters': { id: 3, zh: '无重复字符的最长子串' },
+      'Median of Two Sorted Arrays': { id: 4, zh: '两个排序数组的中位数' },
+      'Longest Palindromic Substring': { id: 5, zh: '最长回文子串' }
     };
 
     // 切换语言
@@ -321,11 +354,9 @@
       loadData().then(data => {
         const site = document.getElementById('site').value;
         const timezone = document.getElementById('timezone').value;
-        const timeWindow = document.getElementById('timeWindow').value;
         const timeDimension = document.getElementById('timeDimension').value;
         const siteFilteredData = filterDataBySite(data, site);
-        const filteredData = filterDataByTimeWindow(siteFilteredData, timeWindow);
-        drawTrendChart(filteredData, timeDimension, timezone);
+        drawTrendChart(siteFilteredData, timeDimension, timezone);
       });
     }
 
@@ -341,8 +372,9 @@
       document.querySelector('label[for="language"]').textContent = lang.language;
       document.querySelector('label[for="site"]').textContent = lang.site;
       document.querySelector('label[for="timezone"]').textContent = lang.timezone;
-      document.querySelector('label[for="timeWindow"]').textContent = lang.timeWindow;
       document.querySelector('label[for="timeDimension"]').textContent = lang.timeDimension;
+      const resetBtn = document.getElementById('resetRangeBtn');
+      if (resetBtn) resetBtn.textContent = lang.resetRange || 'Reset Range';
       
       // 更新站点选项
       const siteSelect = document.getElementById('site');
@@ -357,47 +389,37 @@
       timezoneSelect.options[2].text = lang.timezoneUS;
       timezoneSelect.options[3].text = lang.timezoneCN;
       
-      // 更新时间窗口选项
-      const timeWindowSelect = document.getElementById('timeWindow');
-      timeWindowSelect.options[0].text = lang.timeWindow7;
-      timeWindowSelect.options[1].text = lang.timeWindow30;
-      timeWindowSelect.options[2].text = lang.timeWindow90;
-      timeWindowSelect.options[3].text = lang.timeWindowAll;
-      
       // 更新时间维度选项
       const timeDimensionSelect = document.getElementById('timeDimension');
       timeDimensionSelect.options[0].text = lang.hourLevel;
       timeDimensionSelect.options[1].text = lang.dayLevel;
     }
 
-    // 绘制趋势图
+    // 绘制趋势图（主图 + 概览图）
     function drawTrendChart(data, timeDimension, timezone) {
-      const ctx = document.getElementById('trendChart').getContext('2d');
-      
+      const mainCanvas = document.getElementById('trendChart');
+      const overviewCanvas = document.getElementById('overviewChart');
+      const mainCtx = mainCanvas.getContext('2d');
+      const overviewCtx = overviewCanvas.getContext('2d');
+
       if (data.length === 0) {
         return;
       }
-      
+
       const language = document.getElementById('language').value;
       const lang = translations[language];
-      
+
       // 根据时间维度处理数据
       let processedData = data;
       if (timeDimension === 'day') {
         processedData = aggregateDataByDay(data);
       }
-      
+
       // 提取所有问题名称
       const problemNames = processedData[0].problems.map(p => p.name);
-      
-      // 准备图表数据，使用时区转换
-      const labels = processedData.map(item => {
-        const date = new Date(item.timestamp);
-        return formatTimeForLabel(date, timezone, timeDimension);
-      });
-      
+
+      // 为 Chart.js 使用时间轴构建数据点 (x = ISO timestamp, y = value)
       const datasets = problemNames.map((name, index) => {
-        // 为每个问题生成不同的颜色
         const colors = [
           'rgba(255, 99, 132, 1)',
           'rgba(54, 162, 235, 1)',
@@ -405,29 +427,51 @@
           'rgba(75, 192, 192, 1)',
           'rgba(153, 102, 255, 1)'
         ];
-        
+
+        const dataPoints = processedData.map(item => {
+          const problem = item.problems.find(p => p.name === name);
+          return {
+            x: item.timestamp,
+            y: problem ? problem.online_users : null
+          };
+        });
+
+        const meta = problemsMeta[name] || {};
+        const displayName = (language === 'zh' && meta.zh) ? meta.zh : name;
+        const label = meta.id ? `${meta.id}. ${displayName}` : displayName;
+
         return {
-          label: name,
-          data: processedData.map(item => {
-            const problem = item.problems.find(p => p.name === name);
-            return problem ? problem.online_users : 0;
-          }),
+          label: label,
+          engName: name,
+          data: dataPoints,
           borderColor: colors[index % colors.length],
           backgroundColor: colors[index % colors.length].replace('1)', '0.2)'),
-          tension: 0.1
+          tension: 0.1,
+          pointRadius: 2
         };
       });
-      
-      // 销毁旧图表（如果存在）
-      if (window.trendChart) {
-        window.trendChart.destroy();
+
+      // 销毁旧图表（主图 & 概览图）
+      try {
+        const existingMain = (mainCanvas && Chart.getChart && Chart.getChart(mainCanvas)) || window.trendChart;
+        if (existingMain && typeof existingMain.destroy === 'function') existingMain.destroy();
+      } catch (e) {
+        console.warn('Could not destroy previous main chart:', e);
       }
-      
-      // 创建图表
-      window.trendChart = new Chart(ctx, {
+      try {
+        const existingOverview = (overviewCanvas && Chart.getChart && Chart.getChart(overviewCanvas)) || window.overviewChart;
+        if (existingOverview && typeof existingOverview.destroy === 'function') existingOverview.destroy();
+      } catch (e) {
+        console.warn('Could not destroy previous overview chart:', e);
+      }
+
+      // 时间刻度单位
+      const timeUnit = timeDimension === 'hour' ? 'hour' : 'day';
+
+      // 创建主图（line，时间轴）
+      window.trendChart = new Chart(mainCtx, {
         type: 'line',
         data: {
-          labels: labels,
           datasets: datasets
         },
         options: {
@@ -442,45 +486,97 @@
               display: true,
               text: timeDimension === 'hour' ? lang.chartTitleHour : lang.chartTitleDay
             },
-            legend: {
-              position: 'bottom'
+            legend: { position: 'bottom' },
+            tooltip: {
+              callbacks: {
+                label: function(ctx) {
+                  const dsLabel = ctx.dataset.label || '';
+                  const value = (ctx.parsed && ctx.parsed.y !== undefined) ? ctx.parsed.y : (ctx.raw && ctx.raw.y !== undefined ? ctx.raw.y : '');
+                  const lines = [`${dsLabel}: ${value}`];
+                  if (language === 'zh' && ctx.dataset && ctx.dataset.engName) {
+                    lines.push(`(${ctx.dataset.engName})`);
+                  }
+                  return lines;
+                }
+              }
             },
             zoom: {
-              pan: {
-                enabled: true,
-                mode: 'x'
-              },
-              zoom: {
-                wheel: {
-                  enabled: true
-                },
-                pinch: {
-                  enabled: true
-                },
-                mode: 'x'
-              }
+              pan: { enabled: true, mode: 'x' },
+              zoom: { wheel: { enabled: true }, pinch: { enabled: true }, mode: 'x' }
             }
           },
           scales: {
-            y: {
-              beginAtZero: true,
-              title: {
-                display: true,
-                text: lang.chartYAxis
-              }
-            },
+            y: { beginAtZero: true, title: { display: true, text: lang.chartYAxis } },
             x: {
-              title: {
-                display: true,
-                text: timeDimension === 'hour' ? lang.chartXAxisHour : lang.chartXAxisDay
+              type: 'time',
+              time: {
+                unit: timeUnit,
+                displayFormats: {
+                  hour: 'MM/dd HH:00',
+                  day: 'MM/dd'
+                },
+                tooltipFormat: timeDimension === 'hour' ? "yyyy-MM-dd HH:mm" : "yyyy-MM-dd"
               },
-              grid: {
-                display: true
-              }
+              title: { display: true, text: timeDimension === 'hour' ? lang.chartXAxisHour : lang.chartXAxisDay },
+              grid: { display: true },
+              ticks: { source: 'auto', maxRotation: 0, autoSkip: true }
             }
           }
         }
       });
+
+      // 创建概览图（用于选择时间范围，支持拖拽缩放）
+      window.overviewChart = new Chart(overviewCtx, {
+        type: 'line',
+        data: { datasets: datasets.map(ds => ({ ...ds, pointRadius: 0, borderWidth: 1 })) },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          elements: { point: { radius: 0 } },
+          plugins: {
+            legend: { display: false },
+            zoom: {
+              pan: {
+                enabled: true,
+                mode: 'x',
+                onPanComplete: ({chart}) => { syncMainFromOverview(chart); }
+              },
+              zoom: {
+                drag: { enabled: true, backgroundColor: 'rgba(0,0,0,0.1)' },
+                mode: 'x',
+                onZoomComplete: ({chart}) => { syncMainFromOverview(chart); }
+              }
+            }
+          },
+          scales: { x: { type: 'time', time: { unit: timeUnit, displayFormats: { hour: 'MM/dd HH:00', day: 'MM/dd' } }, display: true }, y: { display: false } }
+        }
+      });
+
+      function syncMainFromOverview(overviewChart) {
+        try {
+          const xScale = overviewChart.scales.x;
+          if (!xScale) return;
+          const min = xScale.min;
+          const max = xScale.max;
+          if (window.trendChart) {
+            window.trendChart.options.scales.x.min = min;
+            window.trendChart.options.scales.x.max = max;
+            window.trendChart.update();
+          }
+        } catch (e) {
+          console.warn('syncMainFromOverview error:', e);
+        }
+      }
+
+      // 重置范围
+      window.resetRange = function() {
+        try {
+          if (window.trendChart && typeof window.trendChart.resetZoom === 'function') window.trendChart.resetZoom();
+          if (window.overviewChart && typeof window.overviewChart.resetZoom === 'function') window.overviewChart.resetZoom();
+        } catch (e) {
+          console.warn('resetRange error:', e);
+        }
+      };
     }
 
     // 初始化页面
@@ -491,11 +587,9 @@
       const data = await loadData();
       const site = document.getElementById('site').value;
       const timezone = document.getElementById('timezone').value;
-      const timeWindow = document.getElementById('timeWindow').value;
       const timeDimension = document.getElementById('timeDimension').value;
       const siteFilteredData = filterDataBySite(data, site);
-      const filteredData = filterDataByTimeWindow(siteFilteredData, timeWindow);
-      drawTrendChart(filteredData, timeDimension, timezone);
+      drawTrendChart(siteFilteredData, timeDimension, timezone);
     }
 
     // 页面加载完成后初始化
