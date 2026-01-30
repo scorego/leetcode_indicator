@@ -8,6 +8,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.3.1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
 
@@ -24,16 +25,18 @@
       font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
       margin: 0;
       padding: 28px;
-      background: linear-gradient(180deg,#eef6ff 0%, var(--bg) 100%);
+      background: linear-gradient(180deg,#f7fbff 0%, var(--bg) 100%);
       color: #0f172a;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
     }
     .container {
       max-width: 1200px;
       margin: 0 auto;
-      background: linear-gradient(180deg, rgba(255,255,255,0.9), var(--card));
-      padding: 22px;
-      border-radius: 14px;
-      box-shadow: 0 8px 30px rgba(16,24,40,0.08);
+      background: linear-gradient(180deg, rgba(255,255,255,0.95), var(--card));
+      padding: 26px;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(16,24,40,0.06);
       border: 1px solid rgba(16,24,40,0.04);
     }
     h1 {
@@ -50,14 +53,26 @@
       font-size: 14px;
     }
     .controls { text-align:center; margin-bottom:18px; }
-    .control-item{ display:inline-flex; align-items:center; gap:8px; margin:6px 10px; }
+    .controls { display:flex; flex-wrap:wrap; justify-content:center; gap:12px; align-items:center; margin-bottom:20px }
+    .control-item{ display:inline-flex; align-items:center; gap:8px; margin:6px 8px; }
     label{ font-weight:600; color:var(--muted); font-size:13px }
-    select{ padding:8px 10px; border-radius:8px; border:1px solid rgba(15,23,42,0.08); background:var(--glass); min-width:150px }
-    button{ padding:8px 12px; border-radius:8px; border:none; cursor:pointer; background:var(--accent); color:white; font-weight:600 }
-    button.secondary{ background:#e6eefc; color:var(--accent); border:1px solid rgba(37,99,235,0.08) }
-    .chart-container { position:relative; height:420px; margin-bottom:18px; border-radius:10px; padding:12px; background:linear-gradient(180deg, rgba(250,250,255,0.6), rgba(250,252,255,0.6)); }
+    select{ padding:8px 12px; border-radius:999px; border:1px solid rgba(15,23,42,0.06); background:linear-gradient(180deg, rgba(255,255,255,0.8), rgba(250,250,255,0.8)); min-width:150px; box-shadow: 0 2px 6px rgba(16,24,40,0.03) }
+    button{ padding:8px 12px; border-radius:10px; border:none; cursor:pointer; background:var(--accent); color:white; font-weight:600; transition:transform .12s ease, box-shadow .12s ease }
+    button:hover{ transform:translateY(-1px); box-shadow: 0 8px 20px rgba(37,99,235,0.12) }
+    button.secondary{ background:#ffffff; color:var(--accent); border:1px solid rgba(37,99,235,0.08); box-shadow: 0 2px 6px rgba(16,24,40,0.03) }
+    .chart-container { position:relative; height:460px; margin-bottom:18px; border-radius:12px; padding:14px; background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(250,252,255,0.6)); border: 1px solid rgba(15,23,42,0.03) }
     .overview-container{ height:110px; margin-top:10px; border-radius:8px; padding:8px; background:transparent }
     canvas{ max-width:100%; }
+    .subtitle { text-align:center; color:var(--muted); margin-top:6px; font-size:13px }
+
+    /* event chips */
+    .events-panel { margin-top:8px }
+    .event-chip { display:inline-flex; align-items:center; gap:8px; padding:6px 10px; background:linear-gradient(90deg, rgba(255,255,255,0.9), rgba(250,250,255,0.9)); border-radius:999px; border:1px solid rgba(15,23,42,0.04); margin-right:8px; margin-bottom:6px; box-shadow: 0 2px 6px rgba(16,24,40,0.03); font-size:13px }
+    .event-chip .chip-time { color:var(--muted); font-weight:600 }
+    .chip-delete { background:transparent; border:none; color:var(--muted); cursor:pointer; padding:2px 6px; border-radius:6px }
+    .chip-delete:hover { background:rgba(0,0,0,0.04) }
+    .events-list { display:flex; flex-wrap:wrap; gap:8px; align-items:center; max-height:140px; overflow:auto; padding:6px 0 }
+    .more-chip { padding:6px 10px; border-radius:999px; background:linear-gradient(90deg, #fff, #fbfdff); border:1px dashed rgba(15,23,42,0.06); color:var(--muted); cursor:pointer }
     @media (max-width:720px){ .controls .control-item{ display:block; margin:6px 0 } .chart-container{height:320px} }
   </style>
 </head>
@@ -68,7 +83,7 @@
     
     <div class="controls">
       <div class="control-item">
-        <label for="language">语言：</label>
+        <label for="language">Language：</label>
         <select id="language" onchange="changeLanguage()">
           <option value="zh">中文</option>
           <option value="en">English</option>
@@ -98,6 +113,17 @@
           <option value="day">天级别（最大值）</option>
         </select>
       </div>
+      <div class="control-item">
+        <button id="screenshotBtn" class="secondary" onclick="takeScreenshot()">Screenshot</button>
+      </div>
+    </div>
+    <div class="events-panel" style="margin-top:8px; display:flex; align-items:center; justify-content:space-between; gap:12px;">
+      <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+        <input id="eventDatetime" type="datetime-local" style="padding:8px;border-radius:8px;border:1px solid rgba(15,23,42,0.06);" />
+        <input id="eventTitle" placeholder="" style="padding:8px;border-radius:8px;border:1px solid rgba(15,23,42,0.06);min-width:260px" />
+        <button id="addEventBtn" onclick="addEventFromForm()">Add Event</button>
+      </div>
+      <div id="eventsList" style="font-size:13px;color:var(--muted)"></div>
     </div>
     
     <div class="chart-container">
@@ -210,42 +236,7 @@
       }
     }
 
-    // 格式化时间用于图表标签
-    function formatTimeForLabel(date, timezone, timeDimension) {
-      const options = {
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false
-      };
-
-      let timeZone;
-      switch (timezone) {
-        case 'utc':
-          timeZone = 'UTC';
-          break;
-        case 'us':
-          timeZone = 'America/New_York';
-          break;
-        case 'cn':
-          timeZone = 'Asia/Shanghai';
-          break;
-        case 'local':
-        default:
-          timeZone = undefined;
-      }
-
-      const convertedDate = new Date(date.toLocaleString('en-US', { ...options, timeZone }));
-      
-      if (timeDimension === 'hour') {
-        // 小时级别：显示 月/日 时:00
-        return `${convertedDate.getMonth() + 1}/${convertedDate.getDate()} ${String(convertedDate.getHours()).padStart(2, '0')}:00`;
-      } else {
-        // 天级别：显示 月/日
-        return `${convertedDate.getMonth() + 1}/${convertedDate.getDate()}`;
-      }
-    }
+    // 时间标签格式由 Chart.js 的 time scale 管理（使用 adapter 进行格式化）
 
     // 根据时间窗口过滤数据
     function filterDataByTimeWindow(data, days) {
@@ -271,12 +262,11 @@
       });
     }
 
-    // 语言映射对象
     const translations = {
       zh: {
         title: 'LeetCode Indicator',
         description: '通过LeetCode题目在线人数反映程序员市场趋势',
-        language: '语言：',
+        language: 'Language：',
         site: '站点：',
         siteUS: 'LeetCode US',
         siteCN: 'LeetCode China',
@@ -302,7 +292,17 @@
         chartXAxisDay: '日期',
         chartYAxis: '在线人数',
         noData: '暂无数据',
+        noTags: '暂无标签',
         resetRange: '重置范围'
+        ,
+        addEventButton: '添加事件',
+        eventPlaceholder: '事件标题',
+        chooseDateAlert: '请选择日期/时间'
+        ,
+        showLess: '收起',
+        moreFormat: '+{n} 更多',
+        screenshotButton: '保存截图',
+        screenshotError: '截屏失败'
       },
       en: {
         title: 'LeetCode Indicator',
@@ -333,24 +333,160 @@
         chartXAxisDay: 'Date',
         chartYAxis: 'Online Users',
         noData: 'No Data Available',
+        noTags: 'No tags',
         resetRange: 'Reset Range'
+        ,
+        addEventButton: 'Add Event',
+        eventPlaceholder: 'Event title',
+        chooseDateAlert: 'Please choose a date/time'
+        ,
+        showLess: 'Show less',
+          moreFormat: '+{n} more',
+          screenshotButton: 'Screenshot',
+          screenshotError: 'Screenshot failed'
       }
     };
 
-    // 问题元数据：LeetCode 题目编号与中文标题（可根据需要扩展）
-    const problemsMeta = {
-      'Two Sum': { id: 1, zh: '两数之和' },
-      'Add Two Numbers': { id: 2, zh: '两数相加' },
-      'Longest Substring Without Repeating Characters': { id: 3, zh: '无重复字符的最长子串' },
-      'Median of Two Sorted Arrays': { id: 4, zh: '两个排序数组的中位数' },
-      'Longest Palindromic Substring': { id: 5, zh: '最长回文子串' }
-    };
 
-    // 切换语言
+    // problems metadata will be loaded from data/problems_meta.json
+    let problemsMeta = {};
+
+    // initialEvents loaded from data/events.json (used to seed in-memory events)
+    let initialEvents = [];
+    // current in-memory events (user-added events live here and are NOT persisted)
+    let currentEvents = [];
+    // whether the events list is expanded to show all
+    let eventsExpanded = false;
+
+    async function loadProblemsMeta() {
+      try {
+        const res = await fetch('data/problems_meta.json');
+        if (!res.ok) throw new Error('no meta');
+        problemsMeta = await res.json();
+      } catch (e) {
+        problemsMeta = {};
+        console.warn('Could not load problems_meta.json, using built-in mapping if any.', e);
+      }
+    }
+
+    async function loadInitialEvents() {
+      try {
+        const res = await fetch('data/events.json');
+        if (!res.ok) throw new Error('no events');
+        initialEvents = await res.json();
+      } catch (e) {
+        initialEvents = [];
+        console.warn('Could not load events.json.', e);
+      }
+      // seed currentEvents from initialEvents (but do not persist user edits)
+      currentEvents = (initialEvents || []).slice();
+    }
+
+    // Accessors for in-memory events
+    function getEvents() {
+      return currentEvents || [];
+    }
+
+    function setEvents(evs) {
+      currentEvents = evs || [];
+    }
+
+    function renderEventsUI() {
+      const container = document.getElementById('eventsList');
+      if (!container) return;
+      const events = getEvents();
+      const language = document.getElementById('language') ? document.getElementById('language').value : 'en';
+      const noTagsText = (translations[language] && translations[language].noTags) || 'No tags';
+      if (events.length === 0) {
+        container.textContent = noTagsText;
+        return;
+      }
+      // Render as chips with collapse when too many
+      const maxVisible = 1;
+      container.innerHTML = '';
+      const listWrapper = document.createElement('div');
+      listWrapper.className = 'events-list';
+
+      const toShow = eventsExpanded ? events : events.slice(0, maxVisible);
+      toShow.forEach(ev => {
+        const d = new Date(ev.timestamp);
+        const timeStr = d.toLocaleString();
+        const chip = document.createElement('span');
+        chip.className = 'event-chip';
+        chip.innerHTML = `<span class="chip-time">${timeStr}</span><span class="chip-title">${ev.title}</span><button class="chip-delete" onclick="deleteEvent('${ev.id}')">×</button>`;
+        listWrapper.appendChild(chip);
+      });
+
+      if (events.length > maxVisible) {
+        const moreCount = eventsExpanded ? 0 : events.length - maxVisible;
+        const moreChip = document.createElement('button');
+        moreChip.className = 'more-chip';
+        const langObj = translations[language] || translations['en'];
+        moreChip.textContent = eventsExpanded ? (langObj.showLess || 'Show less') : ((langObj.moreFormat || '+{n} more').replace('{n}', moreCount));
+        moreChip.onclick = function() { eventsExpanded = !eventsExpanded; renderEventsUI(); };
+        listWrapper.appendChild(moreChip);
+      }
+
+      container.appendChild(listWrapper);
+    }
+
+    function addEventFromForm() {
+      const dt = document.getElementById('eventDatetime').value;
+      const title = document.getElementById('eventTitle').value || 'Event';
+      const color = '#ff4d4f';
+      if (!dt) {
+        const language = document.getElementById('language') ? document.getElementById('language').value : 'en';
+        alert((translations[language] && translations[language].chooseDateAlert) || 'Please choose a date/time');
+        return;
+      }
+      const iso = new Date(dt).toISOString();
+      const events = getEvents();
+      const ev = { id: Date.now().toString(), timestamp: iso, title: title, color: color };
+      events.push(ev);
+      setEvents(events);
+      renderEventsUI();
+      updateChart();
+      document.getElementById('eventTitle').value = '';
+    }
+
+    function deleteEvent(id) {
+      let events = getEvents();
+      events = events.filter(e => e.id !== id);
+      setEvents(events);
+      renderEventsUI();
+      updateChart();
+    }
+
+    // One-click screenshot of the main container using html2canvas
+    function takeScreenshot() {
+      const container = document.querySelector('.container');
+      if (!container || typeof html2canvas === 'undefined') {
+        const lang = document.getElementById('language') ? document.getElementById('language').value : 'en';
+        alert((translations[lang] && translations[lang].screenshotError) || 'Screenshot not available');
+        return;
+      }
+      html2canvas(container, {useCORS: true}).then(canvas => {
+        canvas.toBlob(blob => {
+          const a = document.createElement('a');
+          const now = new Date();
+          const pad = n => String(n).padStart(2, '0');
+          const fname = `leetcode-indicator-${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}-${pad(now.getHours())}${pad(now.getMinutes())}.png`;
+          a.href = URL.createObjectURL(blob);
+          a.download = fname;
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+        }, 'image/png');
+      }).catch(err => {
+        console.error('Screenshot failed', err);
+        const lang = document.getElementById('language') ? document.getElementById('language').value : 'en';
+        alert((translations[lang] && translations[lang].screenshotError) || 'Screenshot failed');
+      });
+    }
+
     function changeLanguage() {
       const language = document.getElementById('language').value;
       updateUI(language);
-      // 重新加载数据和图表以更新文本
       loadData().then(data => {
         const site = document.getElementById('site').value;
         const timezone = document.getElementById('timezone').value;
@@ -360,15 +496,12 @@
       });
     }
 
-    // 更新UI文本
     function updateUI(language) {
       const lang = translations[language];
       
-      // 更新标题和描述
       document.querySelector('h1').textContent = lang.title;
       document.querySelector('.description').textContent = lang.description;
       
-      // 更新标签
       document.querySelector('label[for="language"]').textContent = lang.language;
       document.querySelector('label[for="site"]').textContent = lang.site;
       document.querySelector('label[for="timezone"]').textContent = lang.timezone;
@@ -376,26 +509,29 @@
       const resetBtn = document.getElementById('resetRangeBtn');
       if (resetBtn) resetBtn.textContent = lang.resetRange || 'Reset Range';
       
-      // 更新站点选项
       const siteSelect = document.getElementById('site');
       siteSelect.options[0].text = lang.siteUS;
       siteSelect.options[1].text = lang.siteCN;
       siteSelect.options[2].text = lang.siteAll;
       
-      // 更新时区选项
       const timezoneSelect = document.getElementById('timezone');
       timezoneSelect.options[0].text = lang.timezoneLocal;
       timezoneSelect.options[1].text = lang.timezoneUTC;
       timezoneSelect.options[2].text = lang.timezoneUS;
       timezoneSelect.options[3].text = lang.timezoneCN;
       
-      // 更新时间维度选项
       const timeDimensionSelect = document.getElementById('timeDimension');
       timeDimensionSelect.options[0].text = lang.hourLevel;
       timeDimensionSelect.options[1].text = lang.dayLevel;
+
+      const addBtn = document.getElementById('addEventBtn');
+      if (addBtn) addBtn.textContent = lang.addEventButton || 'Add Event';
+      const eventTitleInput = document.getElementById('eventTitle');
+      if (eventTitleInput) eventTitleInput.placeholder = lang.eventPlaceholder || 'Event title';
+      const ssBtn = document.getElementById('screenshotBtn');
+      if (ssBtn) ssBtn.textContent = lang.screenshotButton || 'Screenshot';
     }
 
-    // 绘制趋势图（主图 + 概览图）
     function drawTrendChart(data, timeDimension, timezone) {
       const mainCanvas = document.getElementById('trendChart');
       const overviewCanvas = document.getElementById('overviewChart');
@@ -482,11 +618,36 @@
             intersect: false,
           },
           plugins: {
-            title: {
+                title: {
               display: true,
               text: timeDimension === 'hour' ? lang.chartTitleHour : lang.chartTitleDay
             },
             legend: { position: 'bottom' },
+                annotation: {
+                  annotations: (function(){
+                    const evs = getEvents();
+                    const out = {};
+                    evs.forEach((ev, idx) => {
+                      out['ev' + idx] = {
+                        type: 'line',
+                        xMin: ev.timestamp,
+                        xMax: ev.timestamp,
+                        borderColor: ev.color || '#ff4d4f',
+                        borderWidth: 2,
+                        label: {
+                          enabled: true,
+                          content: ev.title,
+                          backgroundColor: ev.color || '#ff4d4f',
+                          color: '#fff',
+                          position: 'start',
+                          yAdjust: -10,
+                          xAdjust: 6
+                        }
+                      };
+                    });
+                    return out;
+                  })()
+                },
             tooltip: {
               callbacks: {
                 label: function(ctx) {
@@ -583,13 +744,31 @@
     async function init() {
       const language = document.getElementById('language').value;
       updateUI(language);
-      
+      // load external metadata and initial events (if any)
+      await loadProblemsMeta();
+      await loadInitialEvents();
+      renderEventsUI();
+
       const data = await loadData();
       const site = document.getElementById('site').value;
       const timezone = document.getElementById('timezone').value;
       const timeDimension = document.getElementById('timeDimension').value;
       const siteFilteredData = filterDataBySite(data, site);
       drawTrendChart(siteFilteredData, timeDimension, timezone);
+
+      // Pre-fill event datetime input to today's 00:00 local time
+      try {
+        const dtInput = document.getElementById('eventDatetime');
+        if (dtInput) {
+          const now = new Date();
+          const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
+          const pad = (n) => String(n).padStart(2, '0');
+          const val = `${midnight.getFullYear()}-${pad(midnight.getMonth()+1)}-${pad(midnight.getDate())}T${pad(midnight.getHours())}:${pad(midnight.getMinutes())}`;
+          dtInput.value = val;
+        }
+      } catch (e) {
+        /* ignore */
+      }
     }
 
     // 页面加载完成后初始化
