@@ -36,33 +36,6 @@
       height: 400px;
       margin-bottom: 40px;
     }
-    .problem-cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      margin-top: 30px;
-    }
-    .problem-card {
-      background-color: #f9f9f9;
-      padding: 15px;
-      border-radius: 8px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    }
-    .problem-card h3 {
-      margin-top: 0;
-      color: #333;
-    }
-    .online-users {
-      font-size: 24px;
-      font-weight: bold;
-      color: #007bff;
-    }
-    .last-updated {
-      text-align: center;
-      color: #999;
-      margin-top: 30px;
-      font-size: 14px;
-    }
   </style>
 </head>
 <body>
@@ -102,12 +75,6 @@
     <div class="chart-container">
       <canvas id="trendChart"></canvas>
     </div>
-    
-    <div class="problem-cards" id="problemCards">
-      <!-- 问题卡片将通过JavaScript动态生成 -->
-    </div>
-    
-    <p class="last-updated" id="lastUpdated">最后更新: 加载中...</p>
   </div>
 
   <script>
@@ -272,10 +239,11 @@
       updateUI(language);
       // 重新加载数据和图表以更新文本
       loadData().then(data => {
-        generateProblemCards(data);
+        const site = document.getElementById('site').value;
         const timeWindow = document.getElementById('timeWindow').value;
         const timeDimension = document.getElementById('timeDimension').value;
-        const filteredData = filterDataByTimeWindow(data, timeWindow);
+        const siteFilteredData = filterDataBySite(data, site);
+        const filteredData = filterDataByTimeWindow(siteFilteredData, timeWindow);
         drawTrendChart(filteredData, timeDimension);
       });
     }
@@ -311,54 +279,6 @@
       const timeDimensionSelect = document.getElementById('timeDimension');
       timeDimensionSelect.options[0].text = lang.hourLevel;
       timeDimensionSelect.options[1].text = lang.dayLevel;
-      
-      // 更新问题卡片中的文本
-      const problemCards = document.querySelectorAll('.problem-card p');
-      problemCards.forEach(card => {
-        if (card.textContent === '在线人数' || card.textContent === 'Online Users') {
-          card.textContent = lang.onlineUsers;
-        }
-      });
-      
-      // 更新最后更新时间文本
-      const lastUpdatedEl = document.getElementById('lastUpdated');
-      if (lastUpdatedEl.textContent.includes('最后更新:') || lastUpdatedEl.textContent.includes('Last Updated:')) {
-        const timePart = lastUpdatedEl.textContent.split(/最后更新: |Last Updated: /)[1];
-        lastUpdatedEl.textContent = lang.lastUpdated + timePart;
-      }
-    }
-
-    // 生成问题卡片
-    function generateProblemCards(data) {
-      const container = document.getElementById('problemCards');
-      container.innerHTML = '';
-      
-      const language = document.getElementById('language').value;
-      const lang = translations[language];
-      
-      if (data.length === 0) {
-        container.innerHTML = `<p>${lang.noData}</p>`;
-        return;
-      }
-      
-      // 获取最新的数据
-      const latestData = data[data.length - 1];
-      
-      // 更新最后更新时间
-      const lastUpdatedEl = document.getElementById('lastUpdated');
-      lastUpdatedEl.textContent = `${lang.lastUpdated}${new Date(latestData.timestamp).toLocaleString()}`;
-      
-      // 生成卡片
-      latestData.problems.forEach(problem => {
-        const card = document.createElement('div');
-        card.className = 'problem-card';
-        card.innerHTML = `
-          <h3>${problem.name}</h3>
-          <div class="online-users">${problem.online_users}</div>
-          <p>${lang.onlineUsers}</p>
-        `;
-        container.appendChild(card);
-      });
     }
 
     // 绘制趋势图
@@ -484,7 +404,6 @@
       updateUI(language);
       
       const data = await loadData();
-      generateProblemCards(data);
       const site = document.getElementById('site').value;
       const timeWindow = document.getElementById('timeWindow').value;
       const timeDimension = document.getElementById('timeDimension').value;
