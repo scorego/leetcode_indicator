@@ -75,17 +75,22 @@ def run(site='us'):
         # increase navigation and action timeouts (120s)
         page.set_default_navigation_timeout(120000)
         page.set_default_timeout(120000)
+
         for prob in PROBLEMS:
-            url = f"{base}/problems/{prob['slug']}/"
-            try:
-                page.goto(url, wait_until='networkidle', timeout=120000)
-                text = page.content()
-                count = extract_online_from_text(text)
-                print(f"{prob['name']}: {count}")
-                results.append({"name": prob['name'], "online_users": count})
-            except Exception as e:
-                print('Error', url, e)
-                results.append({"name": prob['name'], "online_users": 0})
+            max_retries = 2
+            while max_retries > 0:
+                url = f"{base}/problems/{prob['slug']}/"
+                try:
+                    page.goto(url, wait_until='networkidle', timeout=120000)
+                    text = page.content()
+                    count = extract_online_from_text(text)
+                    print(f"{prob['name']}: {count}")
+                    results.append({"name": prob['name'], "online_users": count})
+
+                    max_retries = 0  # success, exit retry loop
+                except Exception as e:
+                    print('Error', url, e)
+                    max_retries -= 1
         browser.close()
     data = {"timestamp": datetime.now().isoformat(), "site": site, "problems": results}
     save_data(data)
