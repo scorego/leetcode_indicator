@@ -25,8 +25,11 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Run scraper
-        run: python scraper.py
+      - name: Run scraper for US site
+        run: python scraper.py us
+
+      - name: Run scraper for China site
+        run: python scraper.py cn
 
       - name: Commit and push changes
         run: |

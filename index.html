@@ -77,6 +77,13 @@
         <option value="en">English</option>
       </select>
       &nbsp;&nbsp;&nbsp;
+      <label for="site">站点：</label>
+      <select id="site" onchange="updateChart()">
+        <option value="us">LeetCode US</option>
+        <option value="cn">LeetCode China</option>
+        <option value="all">全部</option>
+      </select>
+      &nbsp;&nbsp;&nbsp;
       <label for="timeWindow">时间窗口：</label>
       <select id="timeWindow" onchange="updateChart()">
         <option value="7">最近7天</option>
@@ -172,6 +179,14 @@
       return aggregatedData;
     }
 
+    // 根据站点过滤数据
+    function filterDataBySite(data, site) {
+      if (site === 'all') {
+        return data;
+      }
+      return data.filter(item => item.site === site);
+    }
+
     // 根据时间窗口过滤数据
     function filterDataByTimeWindow(data, days) {
       if (days === 'all') {
@@ -187,10 +202,12 @@
 
     // 更新图表
     function updateChart() {
+      const site = document.getElementById('site').value;
       const timeWindow = document.getElementById('timeWindow').value;
       const timeDimension = document.getElementById('timeDimension').value;
       loadData().then(data => {
-        const filteredData = filterDataByTimeWindow(data, timeWindow);
+        const siteFilteredData = filterDataBySite(data, site);
+        const filteredData = filterDataByTimeWindow(siteFilteredData, timeWindow);
         drawTrendChart(filteredData, timeDimension);
       });
     }
@@ -201,6 +218,10 @@
         title: 'LeetCode Indicator',
         description: '通过LeetCode题目在线人数反映程序员市场趋势',
         language: '语言：',
+        site: '站点：',
+        siteUS: 'LeetCode US',
+        siteCN: 'LeetCode China',
+        siteAll: '全部',
         timeWindow: '时间窗口：',
         timeWindow7: '最近7天',
         timeWindow30: '最近30天',
@@ -222,6 +243,10 @@
         title: 'LeetCode Indicator',
         description: 'Reflecting programmer job market trends through LeetCode problem online users',
         language: 'Language: ',
+        site: 'Site: ',
+        siteUS: 'LeetCode US',
+        siteCN: 'LeetCode China',
+        siteAll: 'All',
         timeWindow: 'Time Window: ',
         timeWindow7: 'Last 7 Days',
         timeWindow30: 'Last 30 Days',
@@ -265,8 +290,15 @@
       
       // 更新标签
       document.querySelector('label[for="language"]').textContent = lang.language;
+      document.querySelector('label[for="site"]').textContent = lang.site;
       document.querySelector('label[for="timeWindow"]').textContent = lang.timeWindow;
       document.querySelector('label[for="timeDimension"]').textContent = lang.timeDimension;
+      
+      // 更新站点选项
+      const siteSelect = document.getElementById('site');
+      siteSelect.options[0].text = lang.siteUS;
+      siteSelect.options[1].text = lang.siteCN;
+      siteSelect.options[2].text = lang.siteAll;
       
       // 更新时间窗口选项
       const timeWindowSelect = document.getElementById('timeWindow');
@@ -453,9 +485,11 @@
       
       const data = await loadData();
       generateProblemCards(data);
+      const site = document.getElementById('site').value;
       const timeWindow = document.getElementById('timeWindow').value;
       const timeDimension = document.getElementById('timeDimension').value;
-      const filteredData = filterDataByTimeWindow(data, timeWindow);
+      const siteFilteredData = filterDataBySite(data, site);
+      const filteredData = filterDataByTimeWindow(siteFilteredData, timeWindow);
       drawTrendChart(filteredData, timeDimension);
     }
 

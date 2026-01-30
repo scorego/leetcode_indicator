@@ -2,29 +2,43 @@ import requests
 from bs4 import BeautifulSoup
 import json
 import os
+import re
+import time
 from datetime import datetime, timedelta
 
-# 定义要监控的LeetCode题目URL
+# LeetCode站点配置
+LEETCODE_SITES = {
+    "us": {
+        "base_url": "https://leetcode.com",
+        "name": "LeetCode US"
+    },
+    "cn": {
+        "base_url": "https://leetcode.cn",
+        "name": "LeetCode China"
+    }
+}
+
+# 定义要监控的LeetCode题目（使用题目slug）
 PROBLEMS = [
     {
         "name": "Two Sum",
-        "url": "https://leetcode.com/problems/two-sum/"
+        "slug": "two-sum"
     },
     {
         "name": "Add Two Numbers",
-        "url": "https://leetcode.com/problems/add-two-numbers/"
+        "slug": "add-two-numbers"
     },
     {
         "name": "Longest Substring Without Repeating Characters",
-        "url": "https://leetcode.com/problems/longest-substring-without-repeating-characters/"
+        "slug": "longest-substring-without-repeating-characters"
     },
     {
         "name": "Median of Two Sorted Arrays",
-        "url": "https://leetcode.com/problems/median-of-two-sorted-arrays/"
+        "slug": "median-of-two-sorted-arrays"
     },
     {
         "name": "Longest Palindromic Substring",
-        "url": "https://leetcode.com/problems/longest-palindromic-substring/"
+        "slug": "longest-palindromic-substring"
     }
 ]
 
@@ -35,6 +49,10 @@ DATA_FILE = os.path.join(DATA_DIR, "online_users.json")
 # 确保数据目录存在
 if not os.path.exists(DATA_DIR):
     os.makedirs(DATA_DIR)
+
+# 构建题目URL
+def build_problem_url(site, slug):
+    return f"{LEETCODE_SITES[site]['base_url']}/problems/{slug}/"
 
 # 从LeetCode页面抓取在线人数
 def scrape_online_users(problem_url):
@@ -53,7 +71,6 @@ def scrape_online_users(problem_url):
         if online_users_element:
             text = online_users_element.get_text(strip=True)
             # 提取数字
-            import re
             match = re.search(r"(\d+,?\d*)\s+users", text)
             if match:
                 return int(match.group(1).replace(",", ""))
@@ -87,29 +104,29 @@ def save_data(data):
         print(f"Error saving data: {e}")
 
 # 主函数
-def main():
-    print("Starting to scrape LeetCode online users...")
+def main(site="us"):
+    print(f"Starting to scrape LeetCode online users from {LEETCODE_SITES[site]['name']}...")
     
     timestamp = datetime.now().isoformat()
     results = []
     
     # 遍历所有题目并抓取在线人数
     for problem in PROBLEMS:
-        online_users = scrape_online_users(problem["url"])
+        problem_url = build_problem_url(site, problem["slug"])
+        online_users = scrape_online_users(problem_url)
         results.append({
             "name": problem["name"],
-            "url": problem["url"],
             "online_users": online_users
         })
         print(f"{problem['name']}: {online_users} online users")
         
         # 避免请求过于频繁
-        import time
         time.sleep(1)
     
     # 构建数据对象
     data = {
         "timestamp": timestamp,
+        "site": site,
         "problems": results
     }
     
@@ -119,4 +136,14 @@ def main():
     print("Scraping completed")
 
 if __name__ == "__main__":
-    main()
+    import sys
+    
+    # 默认爬取美国站，可以通过参数指定站点
+    site = sys.argv[1] if len(sys.argv) > 1 else "us"
+    
+    # 验证站点参数
+    if site not in LEETCODE_SITES:
+        print(f"Error: Invalid site '{site}'. Available sites: {list(LEETCODE_SITES.keys())}")
+        sys.exit(1)
+    
+    main(site)
