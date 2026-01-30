@@ -16,7 +16,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Copy data from main and update gh-pages
+      - name: Copy data and index.html from main and update gh-pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -25,6 +25,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           TMPDIR=$(mktemp -d)
           cp -R data "$TMPDIR"/data || true
+          cp index.html "$TMPDIR"/index.html || true
 
           # Ensure gh-pages branch exists locally (create if missing)
           if git ls-remote --exit-code origin gh-pages; then
@@ -40,12 +41,13 @@ jobs:
 
           mkdir -p data
           cp -R "$TMPDIR"/data/* data/ || true
+          cp "$TMPDIR"/index.html index.html || true
 
-          git add data
+          git add data index.html
           if git diff --staged --quiet; then
-            echo "No changes to data"
+            echo "No changes to data or index.html"
             exit 0
           fi
 
-          git commit -m "Update data JSON from main (scheduled)"
+          git commit -m "Update data and index.html from main (scheduled)"
           git push origin gh-pages
