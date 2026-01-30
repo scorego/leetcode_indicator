@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LeetCode Indicator - 程序员市场趋势</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.3.1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+    :root{
+      --bg:#f3f7fb;
+      --card:#ffffff;
+      --muted:#6b7280;
+      --accent:#2563eb;
+      --glass: rgba(255,255,255,0.7);
+    }
+
+    *{box-sizing:border-box}
+    body {
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      margin: 0;
+      padding: 28px;
+      background: linear-gradient(180deg,#f7fbff 0%, var(--bg) 100%);
+      color: #0f172a;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: linear-gradient(180deg, rgba(255,255,255,0.95), var(--card));
+      padding: 26px;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(16,24,40,0.06);
+      border: 1px solid rgba(16,24,40,0.04);
+    }
+    h1 {
+      text-align: center;
+      color: #0b1220;
+      margin: 6px 0 4px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    .description {
+      text-align: center;
+      color: var(--muted);
+      margin-bottom: 18px;
+      font-size: 14px;
+    }
+    .controls { text-align:center; margin-bottom:18px; }
+    .controls { display:flex; flex-wrap:wrap; justify-content:center; gap:12px; align-items:center; margin-bottom:20px }
+    .control-item{ display:inline-flex; align-items:center; gap:8px; margin:6px 8px; }
+    label{ font-weight:600; color:var(--muted); font-size:13px }
+    select{ padding:8px 12px; border-radius:999px; border:1px solid rgba(15,23,42,0.06); background:linear-gradient(180deg, rgba(255,255,255,0.8), rgba(250,250,255,0.8)); min-width:150px; box-shadow: 0 2px 6px rgba(16,24,40,0.03) }
+    button{ padding:8px 12px; border-radius:10px; border:none; cursor:pointer; background:var(--accent); color:white; font-weight:600; transition:transform .12s ease, box-shadow .12s ease }
+    button:hover{ transform:translateY(-1px); box-shadow: 0 8px 20px rgba(37,99,235,0.12) }
+    button.secondary{ background:#ffffff; color:var(--accent); border:1px solid rgba(37,99,235,0.08); box-shadow: 0 2px 6px rgba(16,24,40,0.03) }
+    .chart-container { position:relative; height:460px; margin-bottom:18px; border-radius:12px; padding:14px; background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(250,252,255,0.6)); border: 1px solid rgba(15,23,42,0.03) }
+    .overview-container{ height:110px; margin-top:10px; border-radius:8px; padding:8px; background:transparent }
+    canvas{ max-width:100%; }
+    .subtitle { text-align:center; color:var(--muted); margin-top:6px; font-size:13px }
+
+    /* event chips */
+    .events-panel { margin-top:8px }
+    .event-chip { display:inline-flex; align-items:center; gap:8px; padding:6px 10px; background:linear-gradient(90deg, rgba(255,255,255,0.9), rgba(250,250,255,0.9)); border-radius:999px; border:1px solid rgba(15,23,42,0.04); margin-right:8px; margin-bottom:6px; box-shadow: 0 2px 6px rgba(16,24,40,0.03); font-size:13px }
+    .event-chip .chip-time { color:var(--muted); font-weight:600 }
+    .chip-delete { background:transparent; border:none; color:var(--muted); cursor:pointer; padding:2px 6px; border-radius:6px }
+    .chip-delete:hover { background:rgba(0,0,0,0.04) }
+    .events-list { display:flex; flex-wrap:wrap; gap:8px; align-items:center; max-height:140px; overflow:auto; padding:6px 0 }
+    .more-chip { padding:6px 10px; border-radius:999px; background:linear-gradient(90deg, #fff, #fbfdff); border:1px dashed rgba(15,23,42,0.06); color:var(--muted); cursor:pointer }
+    @media (max-width:720px){ .controls .control-item{ display:block; margin:6px 0 } .chart-container{height:320px} }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>LeetCode Indicator</h1>
+    <p class="description">通过LeetCode题目在线人数反映程序员市场趋势</p>
+    
+    <div class="controls">
+      <div class="control-item">
+        <label for="language">Language：</label>
+        <select id="language" onchange="changeLanguage()">
+          <option value="zh">中文</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+      <div class="control-item">
+        <label for="site">站点：</label>
+        <select id="site" onchange="updateChart()">
+          <option value="us">LeetCode US</option>
+          <option value="cn">LeetCode China</option>
+          <option value="all">全部</option>
+        </select>
+      </div>
+      <div class="control-item">
+        <label for="timezone">时区：</label>
+        <select id="timezone" onchange="updateChart()">
+          <option value="local">本地时间</option>
+          <option value="utc">UTC时间</option>
+          <option value="us">美国东部时间</option>
+          <option value="cn">中国时间</option>
+        </select>
+      </div>
+      <div class="control-item">
+        <label for="timeDimension">时间维度：</label>
+        <select id="timeDimension" onchange="updateChart()">
+          <option value="hour">小时级别</option>
+          <option value="day">天级别（最大值）</option>
+        </select>
+      </div>
+      <div class="control-item">
+        <button id="screenshotBtn" class="secondary" onclick="takeScreenshot()">Screenshot</button>
+      </div>
+    </div>
+    <div class="events-panel" style="margin-top:8px; display:flex; align-items:center; justify-content:space-between; gap:12px;">
+      <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+        <input id="eventDatetime" type="datetime-local" style="padding:8px;border-radius:8px;border:1px solid rgba(15,23,42,0.06);" />
+        <input id="eventTitle" placeholder="" style="padding:8px;border-radius:8px;border:1px solid rgba(15,23,42,0.06);min-width:260px" />
+        <button id="addEventBtn" onclick="addEventFromForm()">Add Event</button>
+      </div>
+      <div id="eventsList" style="font-size:13px;color:var(--muted)"></div>
+    </div>
+    
+    <div class="chart-container">
+      <canvas id="trendChart"></canvas>
+    </div>
+    <div class="chart-container overview-container" style="height:100px; margin-top:10px;">
+      <canvas id="overviewChart"></canvas>
+      <div style="text-align:right; margin-top:6px;">
+        <button id="resetRangeBtn" class="secondary" onclick="resetRange()">Reset Range</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 加载数据
+    async function loadData() {
+      try {
+        const response = await fetch('data/online_users.json');
+        if (!response.ok) {
+          throw new Error('Failed to load data');
+        }
+        return await response.json();
+      } catch (error) {
+        console.error('Error loading data:', error);
+        return [];
+      }
+    }
+
+    // 聚合数据为天级别（取每天最大值）
+    function aggregateDataByDay(data) {
+      if (data.length === 0) {
+        return [];
+      }
+
+      // 按天分组
+      const groupedByDay = {};
+      data.forEach(item => {
+        const date = new Date(item.timestamp);
+        const dayKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+
+        if (!groupedByDay[dayKey]) {
+          groupedByDay[dayKey] = {
+            timestamp: new Date(dayKey).toISOString(),
+            problems: []
+          };
+        }
+
+        // 合并问题数据，保留每天的最大在线人数
+        item.problems.forEach(problem => {
+          const existingProblem = groupedByDay[dayKey].problems.find(p => p.name === problem.name);
+          if (existingProblem) {
+            existingProblem.online_users = Math.max(existingProblem.online_users, problem.online_users);
+          } else {
+            groupedByDay[dayKey].problems.push({
+              name: problem.name,
+              url: problem.url,
+              online_users: problem.online_users
+            });
+          }
+        });
+      });
+
+      // 构建结果数组
+      const aggregatedData = Object.values(groupedByDay).map(dayData => {
+        return {
+          timestamp: dayData.timestamp,
+          problems: dayData.problems.map(problem => ({
+            name: problem.name,
+            url: problem.url,
+            online_users: problem.online_users
+          }))
+        };
+      });
+
+      // 按时间排序
+      aggregatedData.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+
+      return aggregatedData;
+    }
+
+    // 根据站点过滤数据
+    function filterDataBySite(data, site) {
+      if (site === 'all') {
+        return data;
+      }
+      return data.filter(item => item.site === site);
+    }
+
+    // 根据时区转换时间
+    function convertTimezone(date, timezone) {
+      const options = {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+      };
+
+      switch (timezone) {
+        case 'utc':
+          return date.toLocaleString('en-US', { ...options, timeZone: 'UTC' });
+        case 'us':
+          return date.toLocaleString('en-US', { ...options, timeZone: 'America/New_York' });
+        case 'cn':
+          return date.toLocaleString('zh-CN', { ...options, timeZone: 'Asia/Shanghai' });
+        case 'local':
+        default:
+          return date.toLocaleString('zh-CN', options);
+      }
+    }
+
+    // 时间标签格式由 Chart.js 的 time scale 管理（使用 adapter 进行格式化）
+
+    // 根据时间窗口过滤数据
+    function filterDataByTimeWindow(data, days) {
+      if (days === 'all') {
+        return data;
+      }
+      
+      const daysNum = parseInt(days);
+      const cutoffDate = new Date();
+      cutoffDate.setDate(cutoffDate.getDate() - daysNum);
+      
+      return data.filter(item => new Date(item.timestamp) >= cutoffDate);
+    }
+
+    // 更新图表
+    function updateChart() {
+      const site = document.getElementById('site').value;
+      const timezone = document.getElementById('timezone').value;
+      const timeDimension = document.getElementById('timeDimension').value;
+      loadData().then(data => {
+        const siteFilteredData = filterDataBySite(data, site);
+        drawTrendChart(siteFilteredData, timeDimension, timezone);
+      });
+    }
+
+    const translations = {
+      zh: {
+        title: 'LeetCode Indicator',
+        description: '通过LeetCode题目在线人数反映程序员市场趋势',
+        language: 'Language：',
+        site: '站点：',
+        siteUS: 'LeetCode US',
+        siteCN: 'LeetCode China',
+        siteAll: '全部',
+        timeWindow: '时间窗口：',
+        timeWindow7: '最近7天',
+        timeWindow30: '最近30天',
+        timeWindow90: '最近90天',
+        timeWindowAll: '全部',
+        timezone: '时区：',
+        timezoneLocal: '本地时间',
+        timezoneUTC: 'UTC时间',
+        timezoneUS: '美国东部时间',
+        timezoneCN: '中国时间',
+        timeDimension: '时间维度：',
+        hourLevel: '小时级别',
+        dayLevel: '天级别（最大值）',
+        onlineUsers: '在线人数',
+        lastUpdated: '最后更新: ',
+        chartTitleHour: 'LeetCode题目在线人数趋势 (小时级别)',
+        chartTitleDay: 'LeetCode题目在线人数趋势 (天级别最大值)',
+        chartXAxisHour: '时间（小时）',
+        chartXAxisDay: '日期',
+        chartYAxis: '在线人数',
+        noData: '暂无数据',
+        noTags: '暂无标签',
+        resetRange: '重置范围'
+        ,
+        addEventButton: '添加事件',
+        eventPlaceholder: '事件标题',
+        chooseDateAlert: '请选择日期/时间'
+        ,
+        showLess: '收起',
+        moreFormat: '+{n} 更多',
+        screenshotButton: '保存截图',
+        screenshotError: '截屏失败'
+      },
+      en: {
+        title: 'LeetCode Indicator',
+        description: 'Reflecting programmer job market trends through LeetCode problem online users',
+        language: 'Language: ',
+        site: 'Site: ',
+        siteUS: 'LeetCode US',
+        siteCN: 'LeetCode China',
+        siteAll: 'All',
+        timeWindow: 'Time Window: ',
+        timeWindow7: 'Last 7 Days',
+        timeWindow30: 'Last 30 Days',
+        timeWindow90: 'Last 90 Days',
+        timeWindowAll: 'All',
+        timezone: 'Timezone: ',
+        timezoneLocal: 'Local Time',
+        timezoneUTC: 'UTC Time',
+        timezoneUS: 'US Eastern Time',
+        timezoneCN: 'China Time',
+        timeDimension: 'Time Dimension: ',
+        hourLevel: 'Hourly',
+        dayLevel: 'Daily (Max)',
+        onlineUsers: 'Online Users',
+        lastUpdated: 'Last Updated: ',
+        chartTitleHour: 'LeetCode Problem Online Users Trend (Hourly)',
+        chartTitleDay: 'LeetCode Problem Online Users Trend (Daily Max)',
+        chartXAxisHour: 'Time (Hour)',
+        chartXAxisDay: 'Date',
+        chartYAxis: 'Online Users',
+        noData: 'No Data Available',
+        noTags: 'No tags',
+        resetRange: 'Reset Range'
+        ,
+        addEventButton: 'Add Event',
+        eventPlaceholder: 'Event title',
+        chooseDateAlert: 'Please choose a date/time'
+        ,
+        showLess: 'Show less',
+          moreFormat: '+{n} more',
+          screenshotButton: 'Screenshot',
+          screenshotError: 'Screenshot failed'
+      }
+    };
+
+
+    // problems metadata will be loaded from data/problems_meta.json
+    let problemsMeta = {};
+
+    // initialEvents loaded from data/events.json (used to seed in-memory events)
+    let initialEvents = [];
+    // current in-memory events (user-added events live here and are NOT persisted)
+    let currentEvents = [];
+    // whether the events list is expanded to show all
+    let eventsExpanded = false;
+
+    async function loadProblemsMeta() {
+      try {
+        const res = await fetch('data/problems_meta.json');
+        if (!res.ok) throw new Error('no meta');
+        problemsMeta = await res.json();
+      } catch (e) {
+        problemsMeta = {};
+        console.warn('Could not load problems_meta.json, using built-in mapping if any.', e);
+      }
+    }
+
+    async function loadInitialEvents() {
+      try {
+        const res = await fetch('data/events.json');
+        if (!res.ok) throw new Error('no events');
+        initialEvents = await res.json();
+      } catch (e) {
+        initialEvents = [];
+        console.warn('Could not load events.json.', e);
+      }
+      // seed currentEvents from initialEvents (but do not persist user edits)
+      currentEvents = (initialEvents || []).slice();
+    }
+
+    // Accessors for in-memory events
+    function getEvents() {
+      return currentEvents || [];
+    }
+
+    function setEvents(evs) {
+      currentEvents = evs || [];
+    }
+
+    function renderEventsUI() {
+      const container = document.getElementById('eventsList');
+      if (!container) return;
+      const events = getEvents();
+      const language = document.getElementById('language') ? document.getElementById('language').value : 'en';
+      const noTagsText = (translations[language] && translations[language].noTags) || 'No tags';
+      if (events.length === 0) {
+        container.textContent = noTagsText;
+        return;
+      }
+      // Render as chips with collapse when too many
+      const maxVisible = 1;
+      container.innerHTML = '';
+      const listWrapper = document.createElement('div');
+      listWrapper.className = 'events-list';
+
+      const toShow = eventsExpanded ? events : events.slice(0, maxVisible);
+      toShow.forEach(ev => {
+        const d = new Date(ev.timestamp);
+        const timeStr = d.toLocaleString();
+        const chip = document.createElement('span');
+        chip.className = 'event-chip';
+        chip.innerHTML = `<span class="chip-time">${timeStr}</span><span class="chip-title">${ev.title}</span><button class="chip-delete" onclick="deleteEvent('${ev.id}')">×</button>`;
+        listWrapper.appendChild(chip);
+      });
+
+      if (events.length > maxVisible) {
+        const moreCount = eventsExpanded ? 0 : events.length - maxVisible;
+        const moreChip = document.createElement('button');
+        moreChip.className = 'more-chip';
+        const langObj = translations[language] || translations['en'];
+        moreChip.textContent = eventsExpanded ? (langObj.showLess || 'Show less') : ((langObj.moreFormat || '+{n} more').replace('{n}', moreCount));
+        moreChip.onclick = function() { eventsExpanded = !eventsExpanded; renderEventsUI(); };
+        listWrapper.appendChild(moreChip);
+      }
+
+      container.appendChild(listWrapper);
+    }
+
+    function addEventFromForm() {
+      const dt = document.getElementById('eventDatetime').value;
+      const title = document.getElementById('eventTitle').value || 'Event';
+      const color = '#ff4d4f';
+      if (!dt) {
+        const language = document.getElementById('language') ? document.getElementById('language').value : 'en';
+        alert((translations[language] && translations[language].chooseDateAlert) || 'Please choose a date/time');
+        return;
+      }
+      const iso = new Date(dt).toISOString();
+      const events = getEvents();
+      const ev = { id: Date.now().toString(), timestamp: iso, title: title, color: color };
+      events.push(ev);
+      setEvents(events);
+      renderEventsUI();
+      updateChart();
+      document.getElementById('eventTitle').value = '';
+    }
+
+    function deleteEvent(id) {
+      let events = getEvents();
+      events = events.filter(e => e.id !== id);
+      setEvents(events);
+      renderEventsUI();
+      updateChart();
+    }
+
+    // One-click screenshot of the main container using html2canvas
+    function takeScreenshot() {
+      const container = document.querySelector('.container');
+      if (!container || typeof html2canvas === 'undefined') {
+        const lang = document.getElementById('language') ? document.getElementById('language').value : 'en';
+        alert((translations[lang] && translations[lang].screenshotError) || 'Screenshot not available');
+        return;
+      }
+      html2canvas(container, {useCORS: true}).then(canvas => {
+        canvas.toBlob(blob => {
+          const a = document.createElement('a');
+          const now = new Date();
+          const pad = n => String(n).padStart(2, '0');
+          const fname = `leetcode-indicator-${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}-${pad(now.getHours())}${pad(now.getMinutes())}.png`;
+          a.href = URL.createObjectURL(blob);
+          a.download = fname;
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+        }, 'image/png');
+      }).catch(err => {
+        console.error('Screenshot failed', err);
+        const lang = document.getElementById('language') ? document.getElementById('language').value : 'en';
+        alert((translations[lang] && translations[lang].screenshotError) || 'Screenshot failed');
+      });
+    }
+
+    function changeLanguage() {
+      const language = document.getElementById('language').value;
+      updateUI(language);
+      loadData().then(data => {
+        const site = document.getElementById('site').value;
+        const timezone = document.getElementById('timezone').value;
+        const timeDimension = document.getElementById('timeDimension').value;
+        const siteFilteredData = filterDataBySite(data, site);
+        drawTrendChart(siteFilteredData, timeDimension, timezone);
+      });
+    }
+
+    function updateUI(language) {
+      const lang = translations[language];
+      
+      document.querySelector('h1').textContent = lang.title;
+      document.querySelector('.description').textContent = lang.description;
+      
+      document.querySelector('label[for="language"]').textContent = lang.language;
+      document.querySelector('label[for="site"]').textContent = lang.site;
+      document.querySelector('label[for="timezone"]').textContent = lang.timezone;
+      document.querySelector('label[for="timeDimension"]').textContent = lang.timeDimension;
+      const resetBtn = document.getElementById('resetRangeBtn');
+      if (resetBtn) resetBtn.textContent = lang.resetRange || 'Reset Range';
+      
+      const siteSelect = document.getElementById('site');
+      siteSelect.options[0].text = lang.siteUS;
+      siteSelect.options[1].text = lang.siteCN;
+      siteSelect.options[2].text = lang.siteAll;
+      
+      const timezoneSelect = document.getElementById('timezone');
+      timezoneSelect.options[0].text = lang.timezoneLocal;
+      timezoneSelect.options[1].text = lang.timezoneUTC;
+      timezoneSelect.options[2].text = lang.timezoneUS;
+      timezoneSelect.options[3].text = lang.timezoneCN;
+      
+      const timeDimensionSelect = document.getElementById('timeDimension');
+      timeDimensionSelect.options[0].text = lang.hourLevel;
+      timeDimensionSelect.options[1].text = lang.dayLevel;
+
+      const addBtn = document.getElementById('addEventBtn');
+      if (addBtn) addBtn.textContent = lang.addEventButton || 'Add Event';
+      const eventTitleInput = document.getElementById('eventTitle');
+      if (eventTitleInput) eventTitleInput.placeholder = lang.eventPlaceholder || 'Event title';
+      const ssBtn = document.getElementById('screenshotBtn');
+      if (ssBtn) ssBtn.textContent = lang.screenshotButton || 'Screenshot';
+    }
+
+    function drawTrendChart(data, timeDimension, timezone) {
+      const mainCanvas = document.getElementById('trendChart');
+      const overviewCanvas = document.getElementById('overviewChart');
+      const mainCtx = mainCanvas.getContext('2d');
+      const overviewCtx = overviewCanvas.getContext('2d');
+
+      if (data.length === 0) {
+        return;
+      }
+
+      const language = document.getElementById('language').value;
+      const lang = translations[language];
+
+      // 根据时间维度处理数据
+      let processedData = data;
+      if (timeDimension === 'day') {
+        processedData = aggregateDataByDay(data);
+      }
+
+      // 提取所有问题名称
+      const problemNames = processedData[0].problems.map(p => p.name);
+
+      // 为 Chart.js 使用时间轴构建数据点 (x = ISO timestamp, y = value)
+      const datasets = problemNames.map((name, index) => {
+        const colors = [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)'
+        ];
+
+        const dataPoints = processedData.map(item => {
+          const problem = item.problems.find(p => p.name === name);
+          return {
+            x: item.timestamp,
+            y: problem ? problem.online_users : null
+          };
+        });
+
+        const meta = problemsMeta[name] || {};
+        const displayName = (language === 'zh' && meta.zh) ? meta.zh : name;
+        const label = meta.id ? `${meta.id}. ${displayName}` : displayName;
+
+        return {
+          label: label,
+          engName: name,
+          data: dataPoints,
+          borderColor: colors[index % colors.length],
+          backgroundColor: colors[index % colors.length].replace('1)', '0.2)'),
+          tension: 0.1,
+          pointRadius: 2
+        };
+      });
+
+      // 销毁旧图表（主图 & 概览图）
+      try {
+        const existingMain = (mainCanvas && Chart.getChart && Chart.getChart(mainCanvas)) || window.trendChart;
+        if (existingMain && typeof existingMain.destroy === 'function') existingMain.destroy();
+      } catch (e) {
+        console.warn('Could not destroy previous main chart:', e);
+      }
+      try {
+        const existingOverview = (overviewCanvas && Chart.getChart && Chart.getChart(overviewCanvas)) || window.overviewChart;
+        if (existingOverview && typeof existingOverview.destroy === 'function') existingOverview.destroy();
+      } catch (e) {
+        console.warn('Could not destroy previous overview chart:', e);
+      }
+
+      // 时间刻度单位
+      const timeUnit = timeDimension === 'hour' ? 'hour' : 'day';
+
+      // 创建主图（line，时间轴）
+      window.trendChart = new Chart(mainCtx, {
+        type: 'line',
+        data: {
+          datasets: datasets
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: {
+            mode: 'index',
+            intersect: false,
+          },
+          plugins: {
+                title: {
+              display: true,
+              text: timeDimension === 'hour' ? lang.chartTitleHour : lang.chartTitleDay
+            },
+            legend: { position: 'bottom' },
+                annotation: {
+                  annotations: (function(){
+                    const evs = getEvents();
+                    const out = {};
+                    evs.forEach((ev, idx) => {
+                      out['ev' + idx] = {
+                        type: 'line',
+                        xMin: ev.timestamp,
+                        xMax: ev.timestamp,
+                        borderColor: ev.color || '#ff4d4f',
+                        borderWidth: 2,
+                        label: {
+                          enabled: true,
+                          content: ev.title,
+                          backgroundColor: ev.color || '#ff4d4f',
+                          color: '#fff',
+                          position: 'start',
+                          yAdjust: -10,
+                          xAdjust: 6
+                        }
+                      };
+                    });
+                    return out;
+                  })()
+                },
+            tooltip: {
+              callbacks: {
+                label: function(ctx) {
+                  const dsLabel = ctx.dataset.label || '';
+                  const value = (ctx.parsed && ctx.parsed.y !== undefined) ? ctx.parsed.y : (ctx.raw && ctx.raw.y !== undefined ? ctx.raw.y : '');
+                  const lines = [`${dsLabel}: ${value}`];
+                  if (language === 'zh' && ctx.dataset && ctx.dataset.engName) {
+                    lines.push(`(${ctx.dataset.engName})`);
+                  }
+                  return lines;
+                }
+              }
+            },
+            zoom: {
+              pan: { enabled: true, mode: 'x' },
+              zoom: { wheel: { enabled: true }, pinch: { enabled: true }, mode: 'x' }
+            }
+          },
+          scales: {
+            y: { beginAtZero: true, title: { display: true, text: lang.chartYAxis } },
+            x: {
+              type: 'time',
+              time: {
+                unit: timeUnit,
+                displayFormats: {
+                  hour: 'MM/dd HH:00',
+                  day: 'MM/dd'
+                },
+                tooltipFormat: timeDimension === 'hour' ? "yyyy-MM-dd HH:mm" : "yyyy-MM-dd"
+              },
+              title: { display: true, text: timeDimension === 'hour' ? lang.chartXAxisHour : lang.chartXAxisDay },
+              grid: { display: true },
+              ticks: { source: 'auto', maxRotation: 0, autoSkip: true }
+            }
+          }
+        }
+      });
+
+      // 创建概览图（用于选择时间范围，支持拖拽缩放）
+      window.overviewChart = new Chart(overviewCtx, {
+        type: 'line',
+        data: { datasets: datasets.map(ds => ({ ...ds, pointRadius: 0, borderWidth: 1 })) },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          elements: { point: { radius: 0 } },
+          plugins: {
+            legend: { display: false },
+            zoom: {
+              pan: {
+                enabled: true,
+                mode: 'x',
+                onPanComplete: ({chart}) => { syncMainFromOverview(chart); }
+              },
+              zoom: {
+                drag: { enabled: true, backgroundColor: 'rgba(0,0,0,0.1)' },
+                mode: 'x',
+                onZoomComplete: ({chart}) => { syncMainFromOverview(chart); }
+              }
+            }
+          },
+          scales: { x: { type: 'time', time: { unit: timeUnit, displayFormats: { hour: 'MM/dd HH:00', day: 'MM/dd' } }, display: true }, y: { display: false } }
+        }
+      });
+
+      function syncMainFromOverview(overviewChart) {
+        try {
+          const xScale = overviewChart.scales.x;
+          if (!xScale) return;
+          const min = xScale.min;
+          const max = xScale.max;
+          if (window.trendChart) {
+            window.trendChart.options.scales.x.min = min;
+            window.trendChart.options.scales.x.max = max;
+            window.trendChart.update();
+          }
+        } catch (e) {
+          console.warn('syncMainFromOverview error:', e);
+        }
+      }
+
+      // 重置范围
+      window.resetRange = function() {
+        try {
+          if (window.trendChart && typeof window.trendChart.resetZoom === 'function') window.trendChart.resetZoom();
+          if (window.overviewChart && typeof window.overviewChart.resetZoom === 'function') window.overviewChart.resetZoom();
+        } catch (e) {
+          console.warn('resetRange error:', e);
+        }
+      };
+    }
+
+    // 初始化页面
+    async function init() {
+      const language = document.getElementById('language').value;
+      updateUI(language);
+      // load external metadata and initial events (if any)
+      await loadProblemsMeta();
+      await loadInitialEvents();
+      renderEventsUI();
+
+      const data = await loadData();
+      const site = document.getElementById('site').value;
+      const timezone = document.getElementById('timezone').value;
+      const timeDimension = document.getElementById('timeDimension').value;
+      const siteFilteredData = filterDataBySite(data, site);
+      drawTrendChart(siteFilteredData, timeDimension, timezone);
+
+      // Pre-fill event datetime input to today's 00:00 local time
+      try {
+        const dtInput = document.getElementById('eventDatetime');
+        if (dtInput) {
+          const now = new Date();
+          const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
+          const pad = (n) => String(n).padStart(2, '0');
+          const val = `${midnight.getFullYear()}-${pad(midnight.getMonth()+1)}-${pad(midnight.getDate())}T${pad(midnight.getHours())}:${pad(midnight.getMinutes())}`;
+          dtInput.value = val;
+        }
+      } catch (e) {
+        /* ignore */
+      }
+    }
+
+    // 页面加载完成后初始化
+    window.onload = init;
+  </script>
+</body>
+</html>
