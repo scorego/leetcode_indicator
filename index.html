@@ -100,10 +100,9 @@
       <div class="control-item">
         <label for="timezone">时区：</label>
         <select id="timezone" onchange="updateChart()">
-          <option value="local">本地时间</option>
-          <option value="utc">UTC时间</option>
-          <option value="us">美国东部时间</option>
-          <option value="cn">中国时间</option>
+          <option value="utc">UTC</option>
+          <option value="pt">PT (UTC-8)</option>
+          <option value="utc8">UTC+8</option>
         </select>
       </div>
       <div class="control-item">
@@ -272,15 +271,10 @@
         siteCN: 'LeetCode China',
         siteAll: '全部',
         timeWindow: '时间窗口：',
-        timeWindow7: '最近7天',
-        timeWindow30: '最近30天',
-        timeWindow90: '最近90天',
-        timeWindowAll: '全部',
         timezone: '时区：',
-        timezoneLocal: '本地时间',
-        timezoneUTC: 'UTC时间',
-        timezoneUS: '美国东部时间',
-        timezoneCN: '中国时间',
+        timezoneUTC: 'UTC',
+        timezonePT: 'PT (UTC-8)',
+        timezoneUTC8: 'UTC+8',
         timeDimension: '时间维度：',
         hourLevel: '小时级别',
         dayLevel: '天级别（最大值）',
@@ -292,7 +286,7 @@
         chartXAxisDay: '日期',
         chartYAxis: '在线人数',
         noData: '暂无数据',
-        noTags: '暂无标签',
+        noTags: '暂无事件',
         resetRange: '重置范围'
         ,
         addEventButton: '添加事件',
@@ -313,15 +307,10 @@
         siteCN: 'LeetCode China',
         siteAll: 'All',
         timeWindow: 'Time Window: ',
-        timeWindow7: 'Last 7 Days',
-        timeWindow30: 'Last 30 Days',
-        timeWindow90: 'Last 90 Days',
-        timeWindowAll: 'All',
         timezone: 'Timezone: ',
-        timezoneLocal: 'Local Time',
-        timezoneUTC: 'UTC Time',
-        timezoneUS: 'US Eastern Time',
-        timezoneCN: 'China Time',
+        timezoneUTC: 'UTC',
+        timezonePT: 'PT (UTC-8)',
+        timezoneUTC8: 'UTC+8',
         timeDimension: 'Time Dimension: ',
         hourLevel: 'Hourly',
         dayLevel: 'Daily (Max)',
@@ -333,7 +322,7 @@
         chartXAxisDay: 'Date',
         chartYAxis: 'Online Users',
         noData: 'No Data Available',
-        noTags: 'No tags',
+        noTags: 'No events',
         resetRange: 'Reset Range'
         ,
         addEventButton: 'Add Event',
@@ -515,10 +504,9 @@
       siteSelect.options[2].text = lang.siteAll;
       
       const timezoneSelect = document.getElementById('timezone');
-      timezoneSelect.options[0].text = lang.timezoneLocal;
-      timezoneSelect.options[1].text = lang.timezoneUTC;
-      timezoneSelect.options[2].text = lang.timezoneUS;
-      timezoneSelect.options[3].text = lang.timezoneCN;
+      timezoneSelect.options[0].text = lang.timezoneUTC;
+      timezoneSelect.options[1].text = lang.timezonePT;
+      timezoneSelect.options[2].text = lang.timezoneUTC8;
       
       const timeDimensionSelect = document.getElementById('timeDimension');
       timeDimensionSelect.options[0].text = lang.hourLevel;
@@ -554,6 +542,51 @@
       // 提取所有问题名称
       const problemNames = processedData[0].problems.map(p => p.name);
 
+      // 销毁旧图表（主图 & 概览图）
+      try {
+        const existingMain = (mainCanvas && Chart.getChart && Chart.getChart(mainCanvas)) || window.trendChart;
+        if (existingMain && typeof existingMain.destroy === 'function') existingMain.destroy();
+      } catch (e) {
+        console.warn('Could not destroy previous main chart:', e);
+      }
+      try {
+        const existingOverview = (overviewCanvas && Chart.getChart && Chart.getChart(overviewCanvas)) || window.overviewChart;
+        if (existingOverview && typeof existingOverview.destroy === 'function') existingOverview.destroy();
+      } catch (e) {
+        console.warn('Could not destroy previous overview chart:', e);
+      }
+
+      // 时间刻度单位
+      const timeUnit = timeDimension === 'hour' ? 'hour' : 'day';
+
+      // 根据时区转换数据点的时间戳
+      function convertTimestampToTimezone(isoString, timezone) {
+        const date = new Date(isoString);
+        
+        // 计算时区偏移量（毫秒）
+        let offsetMs = 0;
+        switch (timezone) {
+          case 'utc':
+            // UTC时间：不偏移
+            offsetMs = 0;
+            break;
+          case 'pt':
+            // PT (UTC-8)：减8小时
+            offsetMs = -8 * 60 * 60 * 1000;
+            break;
+          case 'utc8':
+            // UTC+8：加8小时
+            offsetMs = 8 * 60 * 60 * 1000;
+            break;
+          default:
+            offsetMs = 0;
+            break;
+        }
+        
+        // 返回调整后的时间戳
+        return date.getTime() + offsetMs;
+      }
+
       // 为 Chart.js 使用时间轴构建数据点 (x = ISO timestamp, y = value)
       const datasets = problemNames.map((name, index) => {
         const colors = [
@@ -567,7 +600,7 @@
         const dataPoints = processedData.map(item => {
           const problem = item.problems.find(p => p.name === name);
           return {
-            x: item.timestamp,
+            x: convertTimestampToTimezone(item.timestamp, timezone),
             y: problem ? problem.online_users : null
           };
         });
@@ -586,23 +619,6 @@
           pointRadius: 2
         };
       });
-
-      // 销毁旧图表（主图 & 概览图）
-      try {
-        const existingMain = (mainCanvas && Chart.getChart && Chart.getChart(mainCanvas)) || window.trendChart;
-        if (existingMain && typeof existingMain.destroy === 'function') existingMain.destroy();
-      } catch (e) {
-        console.warn('Could not destroy previous main chart:', e);
-      }
-      try {
-        const existingOverview = (overviewCanvas && Chart.getChart && Chart.getChart(overviewCanvas)) || window.overviewChart;
-        if (existingOverview && typeof existingOverview.destroy === 'function') existingOverview.destroy();
-      } catch (e) {
-        console.warn('Could not destroy previous overview chart:', e);
-      }
-
-      // 时间刻度单位
-      const timeUnit = timeDimension === 'hour' ? 'hour' : 'day';
 
       // 创建主图（line，时间轴）
       window.trendChart = new Chart(mainCtx, {
@@ -633,7 +649,7 @@
                         xMin: ev.timestamp,
                         xMax: ev.timestamp,
                         borderColor: ev.color || '#ff4d4f',
-                        borderWidth: 2,
+                        borderWidth:2,
                         label: {
                           enabled: true,
                           content: ev.title,
@@ -709,7 +725,20 @@
               }
             }
           },
-          scales: { x: { type: 'time', time: { unit: timeUnit, displayFormats: { hour: 'MM/dd HH:00', day: 'MM/dd' } }, display: true }, y: { display: false } }
+          scales: { 
+            x: { 
+              type: 'time', 
+              time: { 
+                unit: timeUnit, 
+                displayFormats: { 
+                  hour: 'MM/dd HH:00', 
+                  day: 'MM/dd' 
+                }
+              }, 
+              display: true 
+            }, 
+            y: { display: false } 
+          }
         }
       });
 
