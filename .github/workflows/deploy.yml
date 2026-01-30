@@ -1,4 +1,14 @@
 name: Build and deploy to GitHub Pages
+on:
+  push:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
@@ -9,7 +19,7 @@ name: Build and deploy to GitHub Pages
         run: |
           rm -rf site || true
           mkdir site
-          rsync -av --exclude='.git' --exclude='.github' . site
+          rsync -av --exclude='.git' --exclude='.github' --exclude='node_modules' --exclude='venv' --exclude='data' . site
 
       - name: Deploy to gh-pages branch
         uses: peaceiris/actions-gh-pages@v4
@@ -17,13 +27,4 @@ name: Build and deploy to GitHub Pages
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./site
           publish_branch: gh-pages
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: ./site
-
-  deploy:
-    needs: prepare
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
+          commit_message: 'Deploy site via Actions'

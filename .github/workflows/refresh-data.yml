@@ -1,0 +1,51 @@
+name: Refresh JSON data on gh-pages
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Copy data from main and update gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          TMPDIR=$(mktemp -d)
+          cp -R data "$TMPDIR"/data || true
+
+          # Ensure gh-pages branch exists locally (create if missing)
+          if git ls-remote --exit-code origin gh-pages; then
+            git fetch origin gh-pages:gh-pages
+            git checkout gh-pages
+          else
+            git checkout --orphan gh-pages
+            git rm -rf . || true
+            git clean -fdx || true
+            git commit --allow-empty -m "Init gh-pages branch"
+            git push origin gh-pages
+          fi
+
+          mkdir -p data
+          cp -R "$TMPDIR"/data/* data/ || true
+
+          git add data
+          if git diff --staged --quiet; then
+            echo "No changes to data"
+            exit 0
+          fi
+
+          git commit -m "Update data JSON from main (scheduled)"
+          git push origin gh-pages
