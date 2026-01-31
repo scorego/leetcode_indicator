@@ -16,6 +16,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 获取完整历史，便于后续pull操作
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -32,9 +34,17 @@ jobs:
 
       - name: Run Playwright scraper for US site
         run: python scraper_playwright.py us
+        continue-on-error: true  # 允许一个站点失败，继续执行另一个站点
 
       - name: Run Playwright scraper for China site
         run: python scraper_playwright.py cn
+        continue-on-error: true  # 允许一个站点失败，继续执行后续步骤
+
+      - name: Git pull to resolve conflicts
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git pull --rebase origin main || true  # 尝试拉取远程更改，失败则继续
 
       - name: Commit and push changes
         run: |
@@ -42,4 +52,4 @@ jobs:
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add data/online_users.json
           git diff --cached --exit-code || git commit -m 'Update LeetCode online users data'
-          git push
+          git push origin main || git push origin main --force-with-lease  # 尝试推送，失败则使用force-with-lease
