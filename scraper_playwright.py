@@ -85,9 +85,9 @@ def run(site='us'):
                     text = page.content()
                     count = extract_online_from_text(text)
                     print(f"{prob['name']}: {count}")
-                    results.append({"name": prob['name'], "online_users": count})
-
-                    max_retries = 0  # success, exit retry loop
+                    if count > 0:
+                        results.append({"name": prob['name'], "online_users": count})
+                        max_retries = 0  # success, exit retry loop
                 except Exception as e:
                     print('Error', url, e)
                     max_retries -= 1
