@@ -47,19 +47,13 @@ def save_data(data):
         else:
             filtered_out.append(item)
 
-    # Safe atomic write
-    tmp_file = DATA_FILE + ".tmp"
-    with open(tmp_file, 'w', encoding='utf-8') as f:
+    with open(DATA_FILE, 'w', encoding='utf-8') as f:
         json.dump(filtered, f, indent=2, ensure_ascii=False)
-
-    os.replace(tmp_file, DATA_FILE)
 
     if filtered_out:
         archive_date = THIRTY_DAYS_AGO.strftime("%Y-%m-%d")
-        archive_dir = os.path.join(DATA_DIR, archive_date)
-        os.makedirs(archive_dir, exist_ok=True)
 
-        pre_data_file = os.path.join(archive_dir, "online_users.json")
+        pre_data_file = os.path.join(DATA_DIR, "{}_online_users.json".format(archive_date))
 
         with open(pre_data_file, 'w', encoding='utf-8') as f:
             json.dump(filtered_out, f, indent=2, ensure_ascii=False)
