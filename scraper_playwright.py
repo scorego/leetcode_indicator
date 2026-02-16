@@ -23,6 +23,11 @@ LEETCODE_SITES = {
 def save_data(data):
     existing_data = []
     THIRTY_DAYS_AGO = datetime.now() - timedelta(days=30)
+    archive_date = THIRTY_DAYS_AGO.strftime("%Y-%m-%d")
+    pre_data_file = os.path.join(DATA_DIR, "{}_online_users.json".format(archive_date))
+
+    filtered = []
+    filtered_out = []
 
     if os.path.exists(DATA_FILE):
         try:
@@ -33,8 +38,14 @@ def save_data(data):
 
     existing_data.append(data)
 
-    filtered = []
-    filtered_out = []
+    if os.path.exists(pre_data_file):
+        try:
+            with open(pre_data_file, 'r', encoding='utf-8') as f:
+                filtered_out = json.load(f)
+        except json.JSONDecodeError:
+            filtered_out = []
+
+    existing_data.append(data)
 
     for item in existing_data:
         try:
@@ -51,10 +62,6 @@ def save_data(data):
         json.dump(filtered, f, indent=2, ensure_ascii=False)
 
     if filtered_out:
-        archive_date = THIRTY_DAYS_AGO.strftime("%Y-%m-%d")
-
-        pre_data_file = os.path.join(DATA_DIR, "{}_online_users.json".format(archive_date))
-
         with open(pre_data_file, 'w', encoding='utf-8') as f:
             json.dump(filtered_out, f, indent=2, ensure_ascii=False)
 
