@@ -20,20 +20,49 @@ LEETCODE_SITES = {
     "cn": "https://leetcode.cn",
 }
 
-
 def save_data(data):
     existing_data = []
+    THIRTY_DAYS_AGO = datetime.now() - timedelta(days=30)
+
     if os.path.exists(DATA_FILE):
         try:
             with open(DATA_FILE, 'r', encoding='utf-8') as f:
                 existing_data = json.load(f)
-        except Exception:
+        except json.JSONDecodeError:
             existing_data = []
+
     existing_data.append(data)
-    thirty_days_ago = datetime.now() - timedelta(days=30)
-    filtered = [item for item in existing_data if datetime.fromisoformat(item['timestamp']) >= thirty_days_ago]
-    with open(DATA_FILE, 'w', encoding='utf-8') as f:
+
+    filtered = []
+    filtered_out = []
+
+    for item in existing_data:
+        try:
+            ts = datetime.fromisoformat(item['timestamp'])
+        except (KeyError, ValueError):
+            continue
+
+        if ts >= THIRTY_DAYS_AGO:
+            filtered.append(item)
+        else:
+            filtered_out.append(item)
+
+    # Safe atomic write
+    tmp_file = DATA_FILE + ".tmp"
+    with open(tmp_file, 'w', encoding='utf-8') as f:
         json.dump(filtered, f, indent=2, ensure_ascii=False)
+
+    os.replace(tmp_file, DATA_FILE)
+
+    if filtered_out:
+        archive_date = THIRTY_DAYS_AGO.strftime("%Y-%m-%d")
+        archive_dir = os.path.join(DATA_DIR, archive_date)
+        os.makedirs(archive_dir, exist_ok=True)
+
+        pre_data_file = os.path.join(archive_dir, "online_users.json")
+
+        with open(pre_data_file, 'w', encoding='utf-8') as f:
+            json.dump(filtered_out, f, indent=2, ensure_ascii=False)
 
 
 def extract_online_from_text(text):
