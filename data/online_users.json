@@ -1,109 +1,5 @@
 [
   {
-    "timestamp": "2026-05-08T17:14:39.044391",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 4
-      },
-      {
-        "name": "Add Two Numbers",
-        "online_users": 688
-      },
-      {
-        "name": "Longest Substring Without Repeating Characters",
-        "online_users": 831
-      },
-      {
-        "name": "Median of Two Sorted Arrays",
-        "online_users": 482
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 477
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-05-08T17:14:39.044391",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 4
-      },
-      {
-        "name": "Add Two Numbers",
-        "online_users": 688
-      },
-      {
-        "name": "Longest Substring Without Repeating Characters",
-        "online_users": 831
-      },
-      {
-        "name": "Median of Two Sorted Arrays",
-        "online_users": 482
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 477
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-05-08T17:15:09.845864",
-    "site": "cn",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 370
-      },
-      {
-        "name": "Add Two Numbers",
-        "online_users": 127
-      },
-      {
-        "name": "Longest Substring Without Repeating Characters",
-        "online_users": 263
-      },
-      {
-        "name": "Median of Two Sorted Arrays",
-        "online_users": 121
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 137
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-05-08T17:15:09.845864",
-    "site": "cn",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 370
-      },
-      {
-        "name": "Add Two Numbers",
-        "online_users": 127
-      },
-      {
-        "name": "Longest Substring Without Repeating Characters",
-        "online_users": 263
-      },
-      {
-        "name": "Median of Two Sorted Arrays",
-        "online_users": 121
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 137
-      }
-    ]
-  },
-  {
     "timestamp": "2026-05-08T18:51:04.174336",
     "site": "us",
     "problems": [
@@ -27994,6 +27890,78 @@
       {
         "name": "Two Sum",
         "online_users": 274
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-07T18:02:12.023660",
+    "site": "us",
+    "problems": [
+      {
+        "name": "Add Two Numbers",
+        "online_users": 700
+      },
+      {
+        "name": "Longest Substring Without Repeating Characters",
+        "online_users": 200
+      },
+      {
+        "name": "Median of Two Sorted Arrays",
+        "online_users": 553
+      },
+      {
+        "name": "Longest Palindromic Substring",
+        "online_users": 508
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-07T18:02:12.023660",
+    "site": "us",
+    "problems": [
+      {
+        "name": "Add Two Numbers",
+        "online_users": 700
+      },
+      {
+        "name": "Longest Substring Without Repeating Characters",
+        "online_users": 200
+      },
+      {
+        "name": "Median of Two Sorted Arrays",
+        "online_users": 553
+      },
+      {
+        "name": "Longest Palindromic Substring",
+        "online_users": 508
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-07T18:15:14.084151",
+    "site": "cn",
+    "problems": [
+      {
+        "name": "Longest Substring Without Repeating Characters",
+        "online_users": 167
+      },
+      {
+        "name": "Median of Two Sorted Arrays",
+        "online_users": 64
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-07T18:15:14.084151",
+    "site": "cn",
+    "problems": [
+      {
+        "name": "Longest Substring Without Repeating Characters",
+        "online_users": 167
+      },
+      {
+        "name": "Median of Two Sorted Arrays",
+        "online_users": 64
       }
     ]
   }
