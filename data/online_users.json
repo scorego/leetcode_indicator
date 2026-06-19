@@ -1,77 +1,5 @@
 [
   {
-    "timestamp": "2026-05-20T20:57:00.483464",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 200
-      },
-      {
-        "name": "Add Two Numbers",
-        "online_users": 200
-      },
-      {
-        "name": "Longest Substring Without Repeating Characters",
-        "online_users": 543
-      },
-      {
-        "name": "Median of Two Sorted Arrays",
-        "online_users": 368
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 200
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-05-20T20:57:00.483464",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 200
-      },
-      {
-        "name": "Add Two Numbers",
-        "online_users": 200
-      },
-      {
-        "name": "Longest Substring Without Repeating Characters",
-        "online_users": 543
-      },
-      {
-        "name": "Median of Two Sorted Arrays",
-        "online_users": 368
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 200
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-05-20T21:13:06.802299",
-    "site": "cn",
-    "problems": [
-      {
-        "name": "Add Two Numbers",
-        "online_users": 89
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-05-20T21:13:06.802299",
-    "site": "cn",
-    "problems": [
-      {
-        "name": "Add Two Numbers",
-        "online_users": 89
-      }
-    ]
-  },
-  {
     "timestamp": "2026-05-20T22:20:34.513005",
     "site": "us",
     "problems": [
@@ -17282,6 +17210,36 @@
   },
   {
     "timestamp": "2026-06-19T20:45:37.410429",
+    "site": "cn",
+    "problems": []
+  },
+  {
+    "timestamp": "2026-06-19T21:59:07.586676",
+    "site": "us",
+    "problems": [
+      {
+        "name": "Two Sum",
+        "online_users": 209
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-19T21:59:07.586676",
+    "site": "us",
+    "problems": [
+      {
+        "name": "Two Sum",
+        "online_users": 209
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-19T22:19:08.369267",
+    "site": "cn",
+    "problems": []
+  },
+  {
+    "timestamp": "2026-06-19T22:19:08.369267",
     "site": "cn",
     "problems": []
   }
