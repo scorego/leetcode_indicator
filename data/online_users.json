@@ -1,25 +1,5 @@
 [
   {
-    "timestamp": "2026-05-21T10:45:19.272919",
-    "site": "cn",
-    "problems": [
-      {
-        "name": "Add Two Numbers",
-        "online_users": 164
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-05-21T10:45:19.272919",
-    "site": "cn",
-    "problems": [
-      {
-        "name": "Add Two Numbers",
-        "online_users": 164
-      }
-    ]
-  },
-  {
     "timestamp": "2026-05-21T13:43:51.546842",
     "site": "us",
     "problems": [
@@ -17132,5 +17112,35 @@
         "online_users": 123
       }
     ]
+  },
+  {
+    "timestamp": "2026-06-20T12:07:41.190322",
+    "site": "us",
+    "problems": [
+      {
+        "name": "Longest Substring Without Repeating Characters",
+        "online_users": 200
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-20T12:07:41.190322",
+    "site": "us",
+    "problems": [
+      {
+        "name": "Longest Substring Without Repeating Characters",
+        "online_users": 200
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-20T12:27:41.872768",
+    "site": "cn",
+    "problems": []
+  },
+  {
+    "timestamp": "2026-06-20T12:27:41.872768",
+    "site": "cn",
+    "problems": []
   }
 ]
