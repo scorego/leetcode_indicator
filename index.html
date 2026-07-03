@@ -20,6 +20,8 @@
       --card:#ffffff;
       --muted:#6b7280;
       --accent:#2563eb;
+      --border:rgba(15,23,42,0.08);
+      --soft:#eef4fb;
       --glass: rgba(255,255,255,0.7);
     }
 
@@ -55,28 +57,42 @@
       margin-bottom: 18px;
       font-size: 14px;
     }
-    .controls { text-align:center; margin-bottom:18px; }
-    .controls { display:flex; flex-wrap:wrap; justify-content:center; gap:12px; align-items:center; margin-bottom:20px }
-    .control-item{ display:inline-flex; align-items:center; gap:8px; margin:6px 8px; }
+    .summary-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin:18px 0; }
+    .summary-item { border:1px solid var(--border); border-radius:8px; padding:12px 14px; background:#fbfdff; min-height:78px; }
+    .summary-label { color:var(--muted); font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; }
+    .summary-value { margin-top:7px; font-size:22px; font-weight:700; color:#111827; line-height:1.15; }
+    .summary-note { margin-top:5px; color:var(--muted); font-size:12px; line-height:1.35; overflow-wrap:anywhere; }
+    .summary-value.positive { color:#047857; }
+    .summary-value.negative { color:#b91c1c; }
+    .toolbar { display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; align-items:center; margin:10px 0 14px; padding:12px; border:1px solid var(--border); border-radius:10px; background:#fbfdff; }
+    .controls { display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+    .actions { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+    .control-item{ display:inline-flex; align-items:center; gap:7px; }
     label{ font-weight:600; color:var(--muted); font-size:13px }
-    select{ padding:8px 12px; border-radius:999px; border:1px solid rgba(15,23,42,0.06); background:linear-gradient(180deg, rgba(255,255,255,0.8), rgba(250,250,255,0.8)); min-width:150px; box-shadow: 0 2px 6px rgba(16,24,40,0.03) }
-    button{ padding:8px 12px; border-radius:10px; border:none; cursor:pointer; background:var(--accent); color:white; font-weight:600; transition:transform .12s ease, box-shadow .12s ease }
+    select, input{ padding:8px 10px; border-radius:8px; border:1px solid var(--border); background:#fff; min-height:36px; box-shadow:0 1px 2px rgba(16,24,40,0.03); }
+    select{ min-width:142px; }
+    button{ padding:8px 12px; border-radius:8px; border:none; cursor:pointer; background:var(--accent); color:white; font-weight:600; transition:transform .12s ease, box-shadow .12s ease }
     button:hover{ transform:translateY(-1px); box-shadow: 0 8px 20px rgba(37,99,235,0.12) }
     button.secondary{ background:#ffffff; color:var(--accent); border:1px solid rgba(37,99,235,0.08); box-shadow: 0 2px 6px rgba(16,24,40,0.03) }
     .chart-container { position:relative; height:460px; margin-bottom:18px; border-radius:12px; padding:14px; background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(250,252,255,0.6)); border: 1px solid rgba(15,23,42,0.03) }
     .overview-container{ height:110px; margin-top:10px; border-radius:8px; padding:8px; background:transparent }
+    .chart-empty { position:absolute; inset:14px; display:none; align-items:center; justify-content:center; text-align:center; padding:24px; color:var(--muted); background:rgba(255,255,255,.86); border:1px dashed var(--border); border-radius:10px; z-index:2; }
+    .chart-empty strong { display:block; color:#111827; margin-bottom:6px; font-size:16px; }
     canvas{ max-width:100%; }
     .subtitle { text-align:center; color:var(--muted); margin-top:6px; font-size:13px }
 
     /* event chips */
-    .events-panel { margin-top:8px }
-    .event-chip { display:inline-flex; align-items:center; gap:8px; padding:6px 10px; background:linear-gradient(90deg, rgba(255,255,255,0.9), rgba(250,250,255,0.9)); border-radius:999px; border:1px solid rgba(15,23,42,0.04); margin-right:8px; margin-bottom:6px; box-shadow: 0 2px 6px rgba(16,24,40,0.03); font-size:13px }
+    .events-panel { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; margin:0 0 16px; padding:10px 12px; border:1px solid var(--border); border-radius:10px; background:#fff; }
+    .event-form { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+    .event-title-input { min-width:240px; }
+    .event-chip { display:inline-flex; align-items:center; gap:8px; padding:6px 10px; background:var(--soft); border-radius:999px; border:1px solid rgba(15,23,42,0.05); margin-right:8px; margin-bottom:6px; font-size:13px }
     .event-chip .chip-time { color:var(--muted); font-weight:600 }
     .chip-delete { background:transparent; border:none; color:var(--muted); cursor:pointer; padding:2px 6px; border-radius:6px }
     .chip-delete:hover { background:rgba(0,0,0,0.04) }
     .events-list { display:flex; flex-wrap:wrap; gap:8px; align-items:center; max-height:140px; overflow:auto; padding:6px 0 }
     .more-chip { padding:6px 10px; border-radius:999px; background:linear-gradient(90deg, #fff, #fbfdff); border:1px dashed rgba(15,23,42,0.06); color:var(--muted); cursor:pointer }
-    @media (max-width:720px){ .controls .control-item{ display:block; margin:6px 0 } .chart-container{height:320px} }
+    @media (max-width:840px){ .summary-grid{grid-template-columns:repeat(2,minmax(0,1fr));} .toolbar,.events-panel{align-items:stretch;} }
+    @media (max-width:720px){ body{padding:14px}.container{padding:18px}.summary-grid{grid-template-columns:1fr}.controls,.actions,.event-form{width:100%}.control-item{width:100%; justify-content:space-between} select,input,.event-title-input{width:100%; min-width:0}.chart-container{height:320px} }
   </style>
 </head>
 <body>
@@ -84,45 +100,70 @@
     <h1>LeetCode Indicator</h1>
     <p class="description">通过LeetCode题目在线人数反映程序员市场趋势</p>
     
-    <div class="controls">
-      <div class="control-item">
-        <label for="language">Language：</label>
-        <select id="language" onchange="changeLanguage()">
-          <option value="zh">中文</option>
-          <option value="en">English</option>
-        </select>
+    <div class="summary-grid" aria-live="polite">
+      <div class="summary-item">
+        <div id="summaryLatestLabel" class="summary-label">Latest</div>
+        <div id="summaryLatestValue" class="summary-value">--</div>
+        <div id="summaryLatestNote" class="summary-note">--</div>
       </div>
-      <div class="control-item">
-        <label for="site">站点：</label>
-        <select id="site" onchange="updateChart()">
-          <option value="us">LeetCode US</option>
-          <option value="cn">LeetCode China</option>
-          <option value="all">全部</option>
-        </select>
+      <div class="summary-item">
+        <div id="summaryTotalLabel" class="summary-label">Online users</div>
+        <div id="summaryTotalValue" class="summary-value">--</div>
+        <div id="summaryTotalNote" class="summary-note">--</div>
       </div>
-      <div class="control-item">
-        <label for="timezone">时区：</label>
-        <select id="timezone" onchange="updateChart()">
-          <option value="utc">UTC</option>
-          <option value="pt">PT (UTC-8)</option>
-          <option value="utc8">UTC+8</option>
-        </select>
+      <div class="summary-item">
+        <div id="summaryChangeLabel" class="summary-label">Change</div>
+        <div id="summaryChangeValue" class="summary-value">--</div>
+        <div id="summaryChangeNote" class="summary-note">--</div>
       </div>
-      <div class="control-item">
-        <label for="timeDimension">时间维度：</label>
-        <select id="timeDimension" onchange="updateChart()">
-          <option value="hour">小时级别</option>
-          <option value="day">天级别（最大值）</option>
-        </select>
+      <div class="summary-item">
+        <div id="summarySamplesLabel" class="summary-label">Samples</div>
+        <div id="summarySamplesValue" class="summary-value">--</div>
+        <div id="summarySamplesNote" class="summary-note">--</div>
       </div>
-      <div class="control-item">
+    </div>
+
+    <div class="toolbar">
+      <div class="controls">
+        <div class="control-item">
+          <label for="language">Language：</label>
+          <select id="language" onchange="changeLanguage()">
+            <option value="zh">中文</option>
+            <option value="en">English</option>
+          </select>
+        </div>
+        <div class="control-item">
+          <label for="site">站点：</label>
+          <select id="site" onchange="updateChart()">
+            <option value="us">LeetCode US</option>
+            <option value="cn" selected>LeetCode China</option>
+            <option value="all">全部</option>
+          </select>
+        </div>
+        <div class="control-item">
+          <label for="timezone">时区：</label>
+          <select id="timezone" onchange="updateChart()">
+            <option value="utc">UTC</option>
+            <option value="pt">PT (UTC-8)</option>
+            <option value="utc8" selected>UTC+8</option>
+          </select>
+        </div>
+        <div class="control-item">
+          <label for="timeDimension">时间维度：</label>
+          <select id="timeDimension" onchange="updateChart()">
+            <option value="hour">小时级别</option>
+            <option value="day" selected>天级别（最大值）</option>
+          </select>
+        </div>
+      </div>
+      <div class="actions">
         <button id="screenshotBtn" class="secondary" onclick="takeScreenshot()">Screenshot</button>
       </div>
     </div>
-    <div class="events-panel" style="margin-top:8px; display:flex; align-items:center; justify-content:space-between; gap:12px;">
-      <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-        <input id="eventDatetime" type="datetime-local" style="padding:8px;border-radius:8px;border:1px solid rgba(15,23,42,0.06);" />
-        <input id="eventTitle" placeholder="" style="padding:8px;border-radius:8px;border:1px solid rgba(15,23,42,0.06);min-width:260px" />
+    <div class="events-panel">
+      <div class="event-form">
+        <input id="eventDatetime" type="datetime-local" />
+        <input id="eventTitle" class="event-title-input" placeholder="" />
         <button id="addEventBtn" onclick="addEventFromForm()">Add Event</button>
       </div>
       <div id="eventsList" style="font-size:13px;color:var(--muted)"></div>
@@ -130,6 +171,7 @@
     
     <div class="chart-container">
       <canvas id="trendChart"></canvas>
+      <div id="chartEmptyState" class="chart-empty"></div>
     </div>
     <div class="chart-container overview-container" style="height:100px; margin-top:10px;">
       <canvas id="overviewChart"></canvas>
@@ -140,10 +182,141 @@
   </div>
 
   <script>
+    function withCacheBust(url) {
+      const separator = url.includes('?') ? '&' : '?';
+      return `${url}${separator}v=${Date.now()}`;
+    }
+
+    async function fetchFreshJson(url) {
+      return fetch(withCacheBust(url), {
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      });
+    }
+
+    function getTimezoneOffsetMs(timezone) {
+      switch (timezone) {
+        case 'pt':
+          return -8 * 60 * 60 * 1000;
+        case 'utc8':
+          return 8 * 60 * 60 * 1000;
+        case 'utc':
+        default:
+          return 0;
+      }
+    }
+
+    function formatTimestamp(isoString, timezone) {
+      const adjusted = new Date(new Date(isoString).getTime() + getTimezoneOffsetMs(timezone));
+      const pad = n => String(n).padStart(2, '0');
+      return `${adjusted.getFullYear()}-${pad(adjusted.getMonth() + 1)}-${pad(adjusted.getDate())} ${pad(adjusted.getHours())}:${pad(adjusted.getMinutes())}`;
+    }
+
+    function formatNumber(value) {
+      return Number(value || 0).toLocaleString();
+    }
+
+    function getUsableSamples(data) {
+      const seen = new Set();
+      return data
+        .filter(item => item && item.timestamp && Array.isArray(item.problems) && item.problems.length > 0)
+        .filter(item => {
+          const key = `${item.site || 'unknown'}|${item.timestamp}`;
+          if (seen.has(key)) return false;
+          seen.add(key);
+          return true;
+        })
+        .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+    }
+
+    function sumProblems(samples) {
+      return samples.reduce((sum, item) => {
+        return sum + item.problems.reduce((innerSum, problem) => innerSum + Number(problem.online_users || 0), 0);
+      }, 0);
+    }
+
+    function getProblemNames(data) {
+      const names = [];
+      const seen = new Set();
+      data.forEach(item => {
+        (item.problems || []).forEach(problem => {
+          if (!seen.has(problem.name)) {
+            seen.add(problem.name);
+            names.push(problem.name);
+          }
+        });
+      });
+      return names;
+    }
+
+    function setChartEmptyState(message, detail) {
+      const emptyState = document.getElementById('chartEmptyState');
+      const overview = document.querySelector('.overview-container');
+      if (!emptyState) return;
+
+      if (message) {
+        emptyState.innerHTML = `<div><strong>${message}</strong><span>${detail || ''}</span></div>`;
+        emptyState.style.display = 'flex';
+        if (overview) overview.style.display = 'none';
+      } else {
+        emptyState.innerHTML = '';
+        emptyState.style.display = 'none';
+        if (overview) overview.style.display = '';
+      }
+    }
+
+    function updateSummary(data, site, timezone) {
+      const language = document.getElementById('language') ? document.getElementById('language').value : 'en';
+      const lang = translations[language] || translations.en;
+      const samples = getUsableSamples(data);
+      const siteLabel = site === 'all' ? lang.siteAll : (site === 'cn' ? lang.siteCN : lang.siteUS);
+
+      if (samples.length === 0) {
+        document.getElementById('summaryLatestValue').textContent = '--';
+        document.getElementById('summaryLatestNote').textContent = lang.noUsableSamples;
+        document.getElementById('summaryTotalValue').textContent = '--';
+        document.getElementById('summaryTotalNote').textContent = siteLabel;
+        document.getElementById('summaryChangeValue').textContent = '--';
+        document.getElementById('summaryChangeValue').className = 'summary-value';
+        document.getElementById('summaryChangeNote').textContent = lang.noPreviousSample;
+        document.getElementById('summarySamplesValue').textContent = '0';
+        document.getElementById('summarySamplesNote').textContent = siteLabel;
+        return;
+      }
+
+      const latestTime = samples[samples.length - 1].timestamp;
+      const latestSamples = samples.filter(item => item.timestamp === latestTime);
+      const previousTime = [...new Set(samples.map(item => item.timestamp))].slice(-2, -1)[0];
+      const previousSamples = previousTime ? samples.filter(item => item.timestamp === previousTime) : [];
+      const latestTotal = sumProblems(latestSamples);
+      const previousTotal = previousSamples.length ? sumProblems(previousSamples) : null;
+      const delta = previousTotal === null ? null : latestTotal - previousTotal;
+      const uniqueProblems = new Set(latestSamples.flatMap(item => item.problems.map(problem => problem.name)));
+
+      document.getElementById('summaryLatestValue').textContent = formatTimestamp(latestTime, timezone);
+      document.getElementById('summaryLatestNote').textContent = `${siteLabel} · ${timezone.toUpperCase()}`;
+      document.getElementById('summaryTotalValue').textContent = formatNumber(latestTotal);
+      document.getElementById('summaryTotalNote').textContent = lang.latestOnlineUsers;
+      const changeValue = document.getElementById('summaryChangeValue');
+      changeValue.className = 'summary-value';
+      if (delta === null) {
+        changeValue.textContent = '--';
+        document.getElementById('summaryChangeNote').textContent = lang.noPreviousSample;
+      } else {
+        changeValue.textContent = `${delta >= 0 ? '+' : ''}${formatNumber(delta)}`;
+        changeValue.classList.add(delta >= 0 ? 'positive' : 'negative');
+        document.getElementById('summaryChangeNote').textContent = lang.vsPreviousSample;
+      }
+      document.getElementById('summarySamplesValue').textContent = formatNumber(samples.length);
+      document.getElementById('summarySamplesNote').textContent = `${uniqueProblems.size} ${lang.trackedProblems}`;
+    }
+
     // 加载数据
     async function loadData() {
       try {
-        const response = await fetch('data/online_users.json');
+        const response = await fetchFreshJson('data/online_users.json');
         if (!response.ok) {
           throw new Error('Failed to load data');
         }
@@ -289,6 +462,16 @@
         chartXAxisDay: '日期',
         chartYAxis: '在线人数',
         noData: '暂无数据',
+        noDataDetail: '当前筛选条件没有可绘制的题目在线人数。',
+        noUsableSamples: '没有可用样本',
+        noPreviousSample: '暂无上一条样本',
+        latestOnlineUsers: '最新样本在线人数总和',
+        vsPreviousSample: '相比上一条样本',
+        trackedProblems: '道题目',
+        summaryLatest: '最新采集',
+        summaryTotal: '在线人数',
+        summaryChange: '变化',
+        summarySamples: '样本数',
         noTags: '暂无事件',
         resetRange: '重置范围'
         ,
@@ -325,6 +508,16 @@
         chartXAxisDay: 'Date',
         chartYAxis: 'Online Users',
         noData: 'No Data Available',
+        noDataDetail: 'No drawable problem online-user counts match the current filters.',
+        noUsableSamples: 'No usable samples',
+        noPreviousSample: 'No previous sample',
+        latestOnlineUsers: 'Latest sample total',
+        vsPreviousSample: 'Vs previous sample',
+        trackedProblems: 'tracked problems',
+        summaryLatest: 'Latest',
+        summaryTotal: 'Online users',
+        summaryChange: 'Change',
+        summarySamples: 'Samples',
         noTags: 'No events',
         resetRange: 'Reset Range'
         ,
@@ -352,7 +545,7 @@
 
     async function loadProblemsMeta() {
       try {
-        const res = await fetch('data/problems_meta.json');
+        const res = await fetchFreshJson('data/problems_meta.json');
         if (!res.ok) throw new Error('no meta');
         problemsMeta = await res.json();
       } catch (e) {
@@ -363,7 +556,7 @@
 
     async function loadInitialEvents() {
       try {
-        const res = await fetch('data/events.json');
+        const res = await fetchFreshJson('data/events.json');
         if (!res.ok) throw new Error('no events');
         initialEvents = await res.json();
       } catch (e) {
@@ -405,7 +598,20 @@
         const timeStr = d.toLocaleString();
         const chip = document.createElement('span');
         chip.className = 'event-chip';
-        chip.innerHTML = `<span class="chip-time">${timeStr}</span><span class="chip-title">${ev.title}</span><button class="chip-delete" onclick="deleteEvent('${ev.id}')">×</button>`;
+        const time = document.createElement('span');
+        time.className = 'chip-time';
+        time.textContent = timeStr;
+        const title = document.createElement('span');
+        title.className = 'chip-title';
+        title.textContent = ev.title;
+        const deleteButton = document.createElement('button');
+        deleteButton.className = 'chip-delete';
+        deleteButton.type = 'button';
+        deleteButton.textContent = '×';
+        deleteButton.onclick = function() { deleteEvent(ev.id); };
+        chip.appendChild(time);
+        chip.appendChild(title);
+        chip.appendChild(deleteButton);
         listWrapper.appendChild(chip);
       });
 
@@ -493,6 +699,10 @@
       
       document.querySelector('h1').textContent = lang.title;
       document.querySelector('.description').textContent = lang.description;
+      document.getElementById('summaryLatestLabel').textContent = lang.summaryLatest;
+      document.getElementById('summaryTotalLabel').textContent = lang.summaryTotal;
+      document.getElementById('summaryChangeLabel').textContent = lang.summaryChange;
+      document.getElementById('summarySamplesLabel').textContent = lang.summarySamples;
       
       document.querySelector('label[for="language"]').textContent = lang.language;
       document.querySelector('label[for="site"]').textContent = lang.site;
@@ -521,6 +731,7 @@
       if (eventTitleInput) eventTitleInput.placeholder = lang.eventPlaceholder || 'Event title';
       const ssBtn = document.getElementById('screenshotBtn');
       if (ssBtn) ssBtn.textContent = lang.screenshotButton || 'Screenshot';
+      renderEventsUI();
     }
 
     function drawTrendChart(data, timeDimension, timezone) {
@@ -529,12 +740,9 @@
       const mainCtx = mainCanvas.getContext('2d');
       const overviewCtx = overviewCanvas.getContext('2d');
 
-      if (data.length === 0) {
-        return;
-      }
-
       const language = document.getElementById('language').value;
       const lang = translations[language];
+      updateSummary(data, document.getElementById('site').value, timezone);
 
       // 根据时间维度处理数据
       let processedData = data;
@@ -543,7 +751,7 @@
       }
 
       // 提取所有问题名称
-      const problemNames = processedData[0].problems.map(p => p.name);
+      const problemNames = getProblemNames(processedData);
 
       // 销毁旧图表（主图 & 概览图）
       try {
@@ -559,35 +767,20 @@
         console.warn('Could not destroy previous overview chart:', e);
       }
 
+      if (data.length === 0 || problemNames.length === 0) {
+        setChartEmptyState(lang.noData, lang.noDataDetail);
+        return;
+      }
+
+      setChartEmptyState('', '');
+
       // 时间刻度单位
       const timeUnit = timeDimension === 'hour' ? 'hour' : 'day';
 
       // 根据时区转换数据点的时间戳
       function convertTimestampToTimezone(isoString, timezone) {
         const date = new Date(isoString);
-        
-        // 计算时区偏移量（毫秒）
-        let offsetMs = 0;
-        switch (timezone) {
-          case 'utc':
-            // UTC时间：不偏移
-            offsetMs = 0;
-            break;
-          case 'pt':
-            // PT (UTC-8)：减8小时
-            offsetMs = -8 * 60 * 60 * 1000;
-            break;
-          case 'utc8':
-            // UTC+8：加8小时
-            offsetMs = 8 * 60 * 60 * 1000;
-            break;
-          default:
-            offsetMs = 0;
-            break;
-        }
-        
-        // 返回调整后的时间戳
-        return date.getTime() + offsetMs;
+        return date.getTime() + getTimezoneOffsetMs(timezone);
       }
 
       // 为 Chart.js 使用时间轴构建数据点 (x = ISO timestamp, y = value)
@@ -650,8 +843,8 @@
                     evs.forEach((ev, idx) => {
                       out['ev' + idx] = {
                         type: 'line',
-                        xMin: ev.timestamp,
-                        xMax: ev.timestamp,
+                        xMin: convertTimestampToTimezone(ev.timestamp, timezone),
+                        xMax: convertTimestampToTimezone(ev.timestamp, timezone),
                         borderColor: ev.color || '#ff4d4f',
                         borderWidth:2,
                         label: {
