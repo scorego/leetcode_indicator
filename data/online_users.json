@@ -1,77 +1,5 @@
 [
   {
-    "timestamp": "2026-06-13T22:37:09.816749",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 200
-      },
-      {
-        "name": "Add Two Numbers",
-        "online_users": 458
-      },
-      {
-        "name": "Longest Substring Without Repeating Characters",
-        "online_users": 566
-      },
-      {
-        "name": "Median of Two Sorted Arrays",
-        "online_users": 331
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 333
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-06-13T22:37:09.816749",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 200
-      },
-      {
-        "name": "Add Two Numbers",
-        "online_users": 458
-      },
-      {
-        "name": "Longest Substring Without Repeating Characters",
-        "online_users": 566
-      },
-      {
-        "name": "Median of Two Sorted Arrays",
-        "online_users": 331
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 333
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-06-13T22:53:19.402846",
-    "site": "cn",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 240
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-06-13T22:53:19.402846",
-    "site": "cn",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 240
-      }
-    ]
-  },
-  {
     "timestamp": "2026-06-14T00:01:18.814888",
     "site": "us",
     "problems": [
@@ -19546,6 +19474,36 @@
   },
   {
     "timestamp": "2026-07-13T22:05:45.017149",
+    "site": "cn",
+    "problems": []
+  },
+  {
+    "timestamp": "2026-07-13T23:01:23.313317",
+    "site": "us",
+    "problems": [
+      {
+        "name": "Two Sum",
+        "online_users": 200
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-07-13T23:01:23.313317",
+    "site": "us",
+    "problems": [
+      {
+        "name": "Two Sum",
+        "online_users": 200
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-07-13T23:21:24.167124",
+    "site": "cn",
+    "problems": []
+  },
+  {
+    "timestamp": "2026-07-13T23:21:24.167124",
     "site": "cn",
     "problems": []
   }
