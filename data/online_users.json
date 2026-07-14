@@ -1,77 +1,5 @@
 [
   {
-    "timestamp": "2026-06-14T22:27:46.597609",
-    "site": "cn",
-    "problems": []
-  },
-  {
-    "timestamp": "2026-06-14T22:27:46.597609",
-    "site": "cn",
-    "problems": []
-  },
-  {
-    "timestamp": "2026-06-14T22:58:25.872222",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 232
-      },
-      {
-        "name": "Add Two Numbers",
-        "online_users": 485
-      },
-      {
-        "name": "Longest Substring Without Repeating Characters",
-        "online_users": 529
-      },
-      {
-        "name": "Median of Two Sorted Arrays",
-        "online_users": 321
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 313
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-06-14T22:58:25.872222",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 232
-      },
-      {
-        "name": "Add Two Numbers",
-        "online_users": 485
-      },
-      {
-        "name": "Longest Substring Without Repeating Characters",
-        "online_users": 529
-      },
-      {
-        "name": "Median of Two Sorted Arrays",
-        "online_users": 321
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 313
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-06-14T23:18:26.630762",
-    "site": "cn",
-    "problems": []
-  },
-  {
-    "timestamp": "2026-06-14T23:18:26.630762",
-    "site": "cn",
-    "problems": []
-  },
-  {
     "timestamp": "2026-06-15T00:13:02.762993",
     "site": "us",
     "problems": [
@@ -19788,6 +19716,44 @@
   },
   {
     "timestamp": "2026-07-14T22:23:44.585636",
+    "site": "cn",
+    "problems": []
+  },
+  {
+    "timestamp": "2026-07-14T23:01:19.636035",
+    "site": "us",
+    "problems": [
+      {
+        "name": "Two Sum",
+        "online_users": 200
+      },
+      {
+        "name": "Add Two Numbers",
+        "online_users": 518
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-07-14T23:01:19.636035",
+    "site": "us",
+    "problems": [
+      {
+        "name": "Two Sum",
+        "online_users": 200
+      },
+      {
+        "name": "Add Two Numbers",
+        "online_users": 518
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-07-14T23:21:20.392673",
+    "site": "cn",
+    "problems": []
+  },
+  {
+    "timestamp": "2026-07-14T23:21:20.392673",
     "site": "cn",
     "problems": []
   }
