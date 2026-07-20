@@ -1,77 +1,5 @@
 [
   {
-    "timestamp": "2026-06-19T23:18:38.951066",
-    "site": "cn",
-    "problems": []
-  },
-  {
-    "timestamp": "2026-06-19T23:18:38.951066",
-    "site": "cn",
-    "problems": []
-  },
-  {
-    "timestamp": "2026-06-19T23:58:43.182432",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 200
-      },
-      {
-        "name": "Add Two Numbers",
-        "online_users": 200
-      },
-      {
-        "name": "Longest Substring Without Repeating Characters",
-        "online_users": 200
-      },
-      {
-        "name": "Median of Two Sorted Arrays",
-        "online_users": 278
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 267
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-06-19T23:58:43.182432",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 200
-      },
-      {
-        "name": "Add Two Numbers",
-        "online_users": 200
-      },
-      {
-        "name": "Longest Substring Without Repeating Characters",
-        "online_users": 200
-      },
-      {
-        "name": "Median of Two Sorted Arrays",
-        "online_users": 278
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 267
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-06-20T00:18:43.898593",
-    "site": "cn",
-    "problems": []
-  },
-  {
-    "timestamp": "2026-06-20T00:18:43.898593",
-    "site": "cn",
-    "problems": []
-  },
-  {
     "timestamp": "2026-06-20T02:49:14.681129",
     "site": "us",
     "problems": [
@@ -22304,6 +22232,26 @@
   },
   {
     "timestamp": "2026-07-19T23:18:08.210706",
+    "site": "cn",
+    "problems": []
+  },
+  {
+    "timestamp": "2026-07-20T00:05:24.540019",
+    "site": "us",
+    "problems": []
+  },
+  {
+    "timestamp": "2026-07-20T00:05:24.540019",
+    "site": "us",
+    "problems": []
+  },
+  {
+    "timestamp": "2026-07-20T00:25:25.273382",
+    "site": "cn",
+    "problems": []
+  },
+  {
+    "timestamp": "2026-07-20T00:25:25.273382",
     "site": "cn",
     "problems": []
   }
