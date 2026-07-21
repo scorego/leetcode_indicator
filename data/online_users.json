@@ -1,43 +1,5 @@
 [
   {
-    "timestamp": "2026-06-21T22:01:58.244517",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 200
-      },
-      {
-        "name": "Add Two Numbers",
-        "online_users": 200
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-06-21T22:01:58.244517",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 200
-      },
-      {
-        "name": "Add Two Numbers",
-        "online_users": 200
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-06-21T22:21:59.024052",
-    "site": "cn",
-    "problems": []
-  },
-  {
-    "timestamp": "2026-06-21T22:21:59.024052",
-    "site": "cn",
-    "problems": []
-  },
-  {
     "timestamp": "2026-06-21T23:06:42.300896",
     "site": "us",
     "problems": [
@@ -22500,6 +22462,44 @@
   },
   {
     "timestamp": "2026-07-21T21:32:59.598556",
+    "site": "cn",
+    "problems": []
+  },
+  {
+    "timestamp": "2026-07-21T22:17:50.294828",
+    "site": "us",
+    "problems": [
+      {
+        "name": "Two Sum",
+        "online_users": 404
+      },
+      {
+        "name": "Add Two Numbers",
+        "online_users": 516
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-07-21T22:17:50.294828",
+    "site": "us",
+    "problems": [
+      {
+        "name": "Two Sum",
+        "online_users": 404
+      },
+      {
+        "name": "Add Two Numbers",
+        "online_users": 516
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-07-21T22:37:51.116162",
+    "site": "cn",
+    "problems": []
+  },
+  {
+    "timestamp": "2026-07-21T22:37:51.116162",
     "site": "cn",
     "problems": []
   }
