@@ -1,67 +1,5 @@
 [
   {
-    "timestamp": "2026-07-05T20:11:55.950887",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 200
-      },
-      {
-        "name": "Add Two Numbers",
-        "online_users": 559
-      },
-      {
-        "name": "Longest Substring Without Repeating Characters",
-        "online_users": 200
-      },
-      {
-        "name": "Median of Two Sorted Arrays",
-        "online_users": 200
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 200
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-07-05T20:11:55.950887",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 200
-      },
-      {
-        "name": "Add Two Numbers",
-        "online_users": 559
-      },
-      {
-        "name": "Longest Substring Without Repeating Characters",
-        "online_users": 200
-      },
-      {
-        "name": "Median of Two Sorted Arrays",
-        "online_users": 200
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 200
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-07-05T20:31:56.747686",
-    "site": "cn",
-    "problems": []
-  },
-  {
-    "timestamp": "2026-07-05T20:31:56.747686",
-    "site": "cn",
-    "problems": []
-  },
-  {
     "timestamp": "2026-07-05T21:32:26.630827",
     "site": "us",
     "problems": [
@@ -22226,6 +22164,36 @@
   },
   {
     "timestamp": "2026-08-04T19:22:00.315638",
+    "site": "cn",
+    "problems": []
+  },
+  {
+    "timestamp": "2026-08-04T21:06:06.111433",
+    "site": "us",
+    "problems": [
+      {
+        "name": "Two Sum",
+        "online_users": 289
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-08-04T21:06:06.111433",
+    "site": "us",
+    "problems": [
+      {
+        "name": "Two Sum",
+        "online_users": 289
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-08-04T21:26:06.853535",
+    "site": "cn",
+    "problems": []
+  },
+  {
+    "timestamp": "2026-08-04T21:26:06.853535",
     "site": "cn",
     "problems": []
   }
