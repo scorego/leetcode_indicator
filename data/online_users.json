@@ -1,43 +1,5 @@
 [
   {
-    "timestamp": "2026-07-11T07:24:40.834880",
-    "site": "us",
-    "problems": []
-  },
-  {
-    "timestamp": "2026-07-11T07:24:40.834880",
-    "site": "us",
-    "problems": []
-  },
-  {
-    "timestamp": "2026-07-11T07:38:56.358068",
-    "site": "cn",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 585
-      },
-      {
-        "name": "Add Two Numbers",
-        "online_users": 5
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-07-11T07:38:56.358068",
-    "site": "cn",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 585
-      },
-      {
-        "name": "Add Two Numbers",
-        "online_users": 5
-      }
-    ]
-  },
-  {
     "timestamp": "2026-07-11T09:04:25.513071",
     "site": "us",
     "problems": [
@@ -23390,6 +23352,70 @@
       {
         "name": "Longest Palindromic Substring",
         "online_users": 228
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-08-10T08:31:03.444243",
+    "site": "us",
+    "problems": [
+      {
+        "name": "Two Sum",
+        "online_users": 363
+      },
+      {
+        "name": "Add Two Numbers",
+        "online_users": 200
+      },
+      {
+        "name": "Longest Palindromic Substring",
+        "online_users": 565
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-08-10T08:31:03.444243",
+    "site": "us",
+    "problems": [
+      {
+        "name": "Two Sum",
+        "online_users": 363
+      },
+      {
+        "name": "Add Two Numbers",
+        "online_users": 200
+      },
+      {
+        "name": "Longest Palindromic Substring",
+        "online_users": 565
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-08-10T08:43:18.436213",
+    "site": "cn",
+    "problems": [
+      {
+        "name": "Two Sum",
+        "online_users": 911
+      },
+      {
+        "name": "Add Two Numbers",
+        "online_users": 270
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-08-10T08:43:18.436213",
+    "site": "cn",
+    "problems": [
+      {
+        "name": "Two Sum",
+        "online_users": 911
+      },
+      {
+        "name": "Add Two Numbers",
+        "online_users": 270
       }
     ]
   }
