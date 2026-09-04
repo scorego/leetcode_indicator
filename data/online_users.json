@@ -1,63 +1,5 @@
 [
   {
-    "timestamp": "2026-08-04T22:39:59.211582",
-    "site": "cn",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 307
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-08-04T22:39:59.211582",
-    "site": "cn",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 307
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-08-04T23:44:37.677741",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 200
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 200
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-08-04T23:44:37.677741",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 200
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 200
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-08-05T00:04:38.513047",
-    "site": "cn",
-    "problems": []
-  },
-  {
-    "timestamp": "2026-08-05T00:04:38.513047",
-    "site": "cn",
-    "problems": []
-  },
-  {
     "timestamp": "2026-08-05T01:04:56.667129",
     "site": "us",
     "problems": [
@@ -28776,5 +28718,59 @@
         "online_users": 358
       }
     ]
+  },
+  {
+    "timestamp": "2026-09-04T00:16:42.879931",
+    "site": "us",
+    "problems": [
+      {
+        "name": "Two Sum",
+        "online_users": 165
+      },
+      {
+        "name": "Add Two Numbers",
+        "online_users": 445
+      },
+      {
+        "name": "Median of Two Sorted Arrays",
+        "online_users": 284
+      },
+      {
+        "name": "Longest Palindromic Substring",
+        "online_users": 288
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-09-04T00:16:42.879931",
+    "site": "us",
+    "problems": [
+      {
+        "name": "Two Sum",
+        "online_users": 165
+      },
+      {
+        "name": "Add Two Numbers",
+        "online_users": 445
+      },
+      {
+        "name": "Median of Two Sorted Arrays",
+        "online_users": 284
+      },
+      {
+        "name": "Longest Palindromic Substring",
+        "online_users": 288
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-09-04T00:36:43.696647",
+    "site": "cn",
+    "problems": []
+  },
+  {
+    "timestamp": "2026-09-04T00:36:43.696647",
+    "site": "cn",
+    "problems": []
   }
 ]
