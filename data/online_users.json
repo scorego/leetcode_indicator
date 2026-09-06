@@ -1,101 +1,5 @@
 [
   {
-    "timestamp": "2026-08-07T16:54:11.590428",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Add Two Numbers",
-        "online_users": 200
-      },
-      {
-        "name": "Median of Two Sorted Arrays",
-        "online_users": 593
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-08-07T16:54:11.590428",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Add Two Numbers",
-        "online_users": 200
-      },
-      {
-        "name": "Median of Two Sorted Arrays",
-        "online_users": 593
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-08-07T17:10:18.620022",
-    "site": "cn",
-    "problems": [
-      {
-        "name": "Add Two Numbers",
-        "online_users": 130
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-08-07T17:10:18.620022",
-    "site": "cn",
-    "problems": [
-      {
-        "name": "Add Two Numbers",
-        "online_users": 130
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-08-07T17:57:11.944139",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 200
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-08-07T17:57:11.944139",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 200
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-08-07T18:11:32.388239",
-    "site": "cn",
-    "problems": [
-      {
-        "name": "Add Two Numbers",
-        "online_users": 107
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 113
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-08-07T18:11:32.388239",
-    "site": "cn",
-    "problems": [
-      {
-        "name": "Add Two Numbers",
-        "online_users": 107
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 113
-      }
-    ]
-  },
-  {
     "timestamp": "2026-08-07T18:57:44.517804",
     "site": "us",
     "problems": []
@@ -28036,6 +27940,36 @@
   },
   {
     "timestamp": "2026-09-06T16:13:25.811864",
+    "site": "cn",
+    "problems": []
+  },
+  {
+    "timestamp": "2026-09-06T18:09:10.704380",
+    "site": "us",
+    "problems": [
+      {
+        "name": "Add Two Numbers",
+        "online_users": 816
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-09-06T18:09:10.704380",
+    "site": "us",
+    "problems": [
+      {
+        "name": "Add Two Numbers",
+        "online_users": 816
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-09-06T18:29:11.300672",
+    "site": "cn",
+    "problems": []
+  },
+  {
+    "timestamp": "2026-09-06T18:29:11.300672",
     "site": "cn",
     "problems": []
   }
