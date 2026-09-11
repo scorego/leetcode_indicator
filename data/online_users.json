@@ -1,125 +1,5 @@
 [
   {
-    "timestamp": "2026-08-12T18:31:26.948654",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 631
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-08-12T18:31:26.948654",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 631
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-08-12T18:43:40.509066",
-    "site": "cn",
-    "problems": [
-      {
-        "name": "Add Two Numbers",
-        "online_users": 115
-      },
-      {
-        "name": "Longest Substring Without Repeating Characters",
-        "online_users": 235
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-08-12T18:43:40.509066",
-    "site": "cn",
-    "problems": [
-      {
-        "name": "Add Two Numbers",
-        "online_users": 115
-      },
-      {
-        "name": "Longest Substring Without Repeating Characters",
-        "online_users": 235
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-08-12T19:35:36.912739",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 200
-      },
-      {
-        "name": "Add Two Numbers",
-        "online_users": 799
-      },
-      {
-        "name": "Longest Substring Without Repeating Characters",
-        "online_users": 18
-      },
-      {
-        "name": "Median of Two Sorted Arrays",
-        "online_users": 510
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 517
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-08-12T19:35:36.912739",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 200
-      },
-      {
-        "name": "Add Two Numbers",
-        "online_users": 799
-      },
-      {
-        "name": "Longest Substring Without Repeating Characters",
-        "online_users": 18
-      },
-      {
-        "name": "Median of Two Sorted Arrays",
-        "online_users": 510
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 517
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-08-12T19:51:43.680232",
-    "site": "cn",
-    "problems": [
-      {
-        "name": "Add Two Numbers",
-        "online_users": 102
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-08-12T19:51:43.680232",
-    "site": "cn",
-    "problems": [
-      {
-        "name": "Add Two Numbers",
-        "online_users": 102
-      }
-    ]
-  },
-  {
     "timestamp": "2026-08-12T20:34:50.252277",
     "site": "us",
     "problems": [
@@ -23996,6 +23876,68 @@
   },
   {
     "timestamp": "2026-09-11T17:48:08.047369",
+    "site": "cn",
+    "problems": []
+  },
+  {
+    "timestamp": "2026-09-11T19:56:02.471672",
+    "site": "us",
+    "problems": [
+      {
+        "name": "Two Sum",
+        "online_users": 200
+      },
+      {
+        "name": "Add Two Numbers",
+        "online_users": 518
+      },
+      {
+        "name": "Longest Substring Without Repeating Characters",
+        "online_users": 603
+      },
+      {
+        "name": "Median of Two Sorted Arrays",
+        "online_users": 364
+      },
+      {
+        "name": "Longest Palindromic Substring",
+        "online_users": 347
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-09-11T19:56:02.471672",
+    "site": "us",
+    "problems": [
+      {
+        "name": "Two Sum",
+        "online_users": 200
+      },
+      {
+        "name": "Add Two Numbers",
+        "online_users": 518
+      },
+      {
+        "name": "Longest Substring Without Repeating Characters",
+        "online_users": 603
+      },
+      {
+        "name": "Median of Two Sorted Arrays",
+        "online_users": 364
+      },
+      {
+        "name": "Longest Palindromic Substring",
+        "online_users": 347
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-09-11T20:16:03.098200",
+    "site": "cn",
+    "problems": []
+  },
+  {
+    "timestamp": "2026-09-11T20:16:03.098200",
     "site": "cn",
     "problems": []
   }
