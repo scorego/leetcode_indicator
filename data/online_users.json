@@ -1,151 +1,5 @@
 [
   {
-    "timestamp": "2026-08-13T05:31:36.379751",
-    "site": "cn",
-    "problems": [
-      {
-        "name": "Add Two Numbers",
-        "online_users": 177
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-08-13T05:31:36.379751",
-    "site": "cn",
-    "problems": [
-      {
-        "name": "Add Two Numbers",
-        "online_users": 177
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-08-13T07:14:00.258987",
-    "site": "us",
-    "problems": []
-  },
-  {
-    "timestamp": "2026-08-13T07:14:00.258987",
-    "site": "us",
-    "problems": []
-  },
-  {
-    "timestamp": "2026-08-13T07:20:40.228794",
-    "site": "cn",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 648
-      },
-      {
-        "name": "Add Two Numbers",
-        "online_users": 209
-      },
-      {
-        "name": "Median of Two Sorted Arrays",
-        "online_users": 159
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 206
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-08-13T07:20:40.228794",
-    "site": "cn",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 648
-      },
-      {
-        "name": "Add Two Numbers",
-        "online_users": 209
-      },
-      {
-        "name": "Median of Two Sorted Arrays",
-        "online_users": 159
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 206
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-08-13T08:15:52.735893",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Add Two Numbers",
-        "online_users": 794
-      },
-      {
-        "name": "Longest Substring Without Repeating Characters",
-        "online_users": 945
-      },
-      {
-        "name": "Median of Two Sorted Arrays",
-        "online_users": 550
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 553
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-08-13T08:15:52.735893",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Add Two Numbers",
-        "online_users": 794
-      },
-      {
-        "name": "Longest Substring Without Repeating Characters",
-        "online_users": 945
-      },
-      {
-        "name": "Median of Two Sorted Arrays",
-        "online_users": 550
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 553
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-08-13T08:30:10.005441",
-    "site": "cn",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 778
-      },
-      {
-        "name": "Add Two Numbers",
-        "online_users": 254
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-08-13T08:30:10.005441",
-    "site": "cn",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 778
-      },
-      {
-        "name": "Add Two Numbers",
-        "online_users": 254
-      }
-    ]
-  },
-  {
     "timestamp": "2026-08-13T09:39:55.169695",
     "site": "us",
     "problems": [
@@ -23678,5 +23532,51 @@
         "online_users": 163
       }
     ]
+  },
+  {
+    "timestamp": "2026-09-12T09:08:00.390586",
+    "site": "us",
+    "problems": [
+      {
+        "name": "Two Sum",
+        "online_users": 447
+      },
+      {
+        "name": "Median of Two Sorted Arrays",
+        "online_users": 377
+      },
+      {
+        "name": "Longest Palindromic Substring",
+        "online_users": 323
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-09-12T09:08:00.390586",
+    "site": "us",
+    "problems": [
+      {
+        "name": "Two Sum",
+        "online_users": 447
+      },
+      {
+        "name": "Median of Two Sorted Arrays",
+        "online_users": 377
+      },
+      {
+        "name": "Longest Palindromic Substring",
+        "online_users": 323
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-09-12T09:28:00.925388",
+    "site": "cn",
+    "problems": []
+  },
+  {
+    "timestamp": "2026-09-12T09:28:00.925388",
+    "site": "cn",
+    "problems": []
   }
 ]
