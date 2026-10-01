@@ -1,67 +1,5 @@
 [
   {
-    "timestamp": "2026-09-01T00:00:11.348260",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 398
-      },
-      {
-        "name": "Add Two Numbers",
-        "online_users": 481
-      },
-      {
-        "name": "Longest Substring Without Repeating Characters",
-        "online_users": 567
-      },
-      {
-        "name": "Median of Two Sorted Arrays",
-        "online_users": 342
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 200
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-09-01T00:00:11.348260",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 398
-      },
-      {
-        "name": "Add Two Numbers",
-        "online_users": 481
-      },
-      {
-        "name": "Longest Substring Without Repeating Characters",
-        "online_users": 567
-      },
-      {
-        "name": "Median of Two Sorted Arrays",
-        "online_users": 342
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 200
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-09-01T00:20:12.116783",
-    "site": "cn",
-    "problems": []
-  },
-  {
-    "timestamp": "2026-09-01T00:20:12.116783",
-    "site": "cn",
-    "problems": []
-  },
-  {
     "timestamp": "2026-09-01T02:57:14.815454",
     "site": "us",
     "problems": [
@@ -10854,6 +10792,68 @@
   },
   {
     "timestamp": "2026-09-30T23:46:23.039358",
+    "site": "cn",
+    "problems": []
+  },
+  {
+    "timestamp": "2026-10-01T02:18:04.324691",
+    "site": "us",
+    "problems": [
+      {
+        "name": "Two Sum",
+        "online_users": 200
+      },
+      {
+        "name": "Add Two Numbers",
+        "online_users": 250
+      },
+      {
+        "name": "Longest Substring Without Repeating Characters",
+        "online_users": 321
+      },
+      {
+        "name": "Median of Two Sorted Arrays",
+        "online_users": 152
+      },
+      {
+        "name": "Longest Palindromic Substring",
+        "online_users": 129
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-10-01T02:18:04.324691",
+    "site": "us",
+    "problems": [
+      {
+        "name": "Two Sum",
+        "online_users": 200
+      },
+      {
+        "name": "Add Two Numbers",
+        "online_users": 250
+      },
+      {
+        "name": "Longest Substring Without Repeating Characters",
+        "online_users": 321
+      },
+      {
+        "name": "Median of Two Sorted Arrays",
+        "online_users": 152
+      },
+      {
+        "name": "Longest Palindromic Substring",
+        "online_users": 129
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-10-01T02:38:05.054343",
+    "site": "cn",
+    "problems": []
+  },
+  {
+    "timestamp": "2026-10-01T02:38:05.054343",
     "site": "cn",
     "problems": []
   }
