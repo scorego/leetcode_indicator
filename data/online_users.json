@@ -1,107 +1,5 @@
 [
   {
-    "timestamp": "2026-09-01T02:57:14.815454",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 200
-      },
-      {
-        "name": "Add Two Numbers",
-        "online_users": 540
-      },
-      {
-        "name": "Longest Substring Without Repeating Characters",
-        "online_users": 674
-      },
-      {
-        "name": "Median of Two Sorted Arrays",
-        "online_users": 396
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 386
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-09-01T02:57:14.815454",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 200
-      },
-      {
-        "name": "Add Two Numbers",
-        "online_users": 540
-      },
-      {
-        "name": "Longest Substring Without Repeating Characters",
-        "online_users": 674
-      },
-      {
-        "name": "Median of Two Sorted Arrays",
-        "online_users": 396
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 386
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-09-01T03:17:15.633973",
-    "site": "cn",
-    "problems": []
-  },
-  {
-    "timestamp": "2026-09-01T03:17:15.633973",
-    "site": "cn",
-    "problems": []
-  },
-  {
-    "timestamp": "2026-09-01T08:24:42.196358",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 369
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-09-01T08:24:42.196358",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 369
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-09-01T08:40:50.301105",
-    "site": "cn",
-    "problems": [
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 280
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-09-01T08:40:50.301105",
-    "site": "cn",
-    "problems": [
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 280
-      }
-    ]
-  },
-  {
     "timestamp": "2026-09-01T13:35:12.699147",
     "site": "us",
     "problems": [
@@ -10856,5 +10754,35 @@
     "timestamp": "2026-10-01T02:38:05.054343",
     "site": "cn",
     "problems": []
+  },
+  {
+    "timestamp": "2026-10-01T09:29:17.335296",
+    "site": "us",
+    "problems": []
+  },
+  {
+    "timestamp": "2026-10-01T09:29:17.335296",
+    "site": "us",
+    "problems": []
+  },
+  {
+    "timestamp": "2026-10-01T09:47:52.901135",
+    "site": "cn",
+    "problems": [
+      {
+        "name": "Longest Palindromic Substring",
+        "online_users": 93
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-10-01T09:47:52.901135",
+    "site": "cn",
+    "problems": [
+      {
+        "name": "Longest Palindromic Substring",
+        "online_users": 93
+      }
+    ]
   }
 ]
