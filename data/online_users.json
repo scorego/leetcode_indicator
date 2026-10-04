@@ -1,105 +1,5 @@
 [
   {
-    "timestamp": "2026-09-04T14:02:22.751185",
-    "site": "cn",
-    "problems": [
-      {
-        "name": "Add Two Numbers",
-        "online_users": 182
-      },
-      {
-        "name": "Median of Two Sorted Arrays",
-        "online_users": 128
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 151
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-09-04T14:02:22.751185",
-    "site": "cn",
-    "problems": [
-      {
-        "name": "Add Two Numbers",
-        "online_users": 182
-      },
-      {
-        "name": "Median of Two Sorted Arrays",
-        "online_users": 128
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 151
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-09-04T17:20:19.919732",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 352
-      },
-      {
-        "name": "Add Two Numbers",
-        "online_users": 878
-      },
-      {
-        "name": "Median of Two Sorted Arrays",
-        "online_users": 574
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 541
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-09-04T17:20:19.919732",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 352
-      },
-      {
-        "name": "Add Two Numbers",
-        "online_users": 878
-      },
-      {
-        "name": "Median of Two Sorted Arrays",
-        "online_users": 574
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 541
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-09-04T17:36:27.792573",
-    "site": "cn",
-    "problems": [
-      {
-        "name": "Longest Substring Without Repeating Characters",
-        "online_users": 243
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-09-04T17:36:27.792573",
-    "site": "cn",
-    "problems": [
-      {
-        "name": "Longest Substring Without Repeating Characters",
-        "online_users": 243
-      }
-    ]
-  },
-  {
     "timestamp": "2026-09-04T19:45:34.730950",
     "site": "us",
     "problems": [
@@ -10474,6 +10374,36 @@
   },
   {
     "timestamp": "2026-10-04T13:54:53.328281",
+    "site": "cn",
+    "problems": []
+  },
+  {
+    "timestamp": "2026-10-04T18:12:40.154096",
+    "site": "us",
+    "problems": [
+      {
+        "name": "Longest Palindromic Substring",
+        "online_users": 200
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-10-04T18:12:40.154096",
+    "site": "us",
+    "problems": [
+      {
+        "name": "Longest Palindromic Substring",
+        "online_users": 200
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-10-04T18:32:40.692518",
+    "site": "cn",
+    "problems": []
+  },
+  {
+    "timestamp": "2026-10-04T18:32:40.692518",
     "site": "cn",
     "problems": []
   }
