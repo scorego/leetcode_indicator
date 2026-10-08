@@ -1,157 +1,5 @@
 [
   {
-    "timestamp": "2026-09-08T15:35:05.928370",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 69
-      },
-      {
-        "name": "Add Two Numbers",
-        "online_users": 775
-      },
-      {
-        "name": "Longest Substring Without Repeating Characters",
-        "online_users": 842
-      },
-      {
-        "name": "Median of Two Sorted Arrays",
-        "online_users": 503
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 467
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-09-08T15:35:05.928370",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 69
-      },
-      {
-        "name": "Add Two Numbers",
-        "online_users": 775
-      },
-      {
-        "name": "Longest Substring Without Repeating Characters",
-        "online_users": 842
-      },
-      {
-        "name": "Median of Two Sorted Arrays",
-        "online_users": 503
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 467
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-09-08T15:43:29.527635",
-    "site": "cn",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 5
-      },
-      {
-        "name": "Add Two Numbers",
-        "online_users": 175
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 152
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-09-08T15:43:29.527635",
-    "site": "cn",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 5
-      },
-      {
-        "name": "Add Two Numbers",
-        "online_users": 175
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 152
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-09-08T19:08:58.708392",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Add Two Numbers",
-        "online_users": 200
-      },
-      {
-        "name": "Longest Substring Without Repeating Characters",
-        "online_users": 805
-      },
-      {
-        "name": "Median of Two Sorted Arrays",
-        "online_users": 471
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 440
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-09-08T19:08:58.708392",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Add Two Numbers",
-        "online_users": 200
-      },
-      {
-        "name": "Longest Substring Without Repeating Characters",
-        "online_users": 805
-      },
-      {
-        "name": "Median of Two Sorted Arrays",
-        "online_users": 471
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 440
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-09-08T19:25:11.724069",
-    "site": "cn",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 333
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-09-08T19:25:11.724069",
-    "site": "cn",
-    "problems": [
-      {
-        "name": "Two Sum",
-        "online_users": 333
-      }
-    ]
-  },
-  {
     "timestamp": "2026-09-08T21:59:17.371491",
     "site": "us",
     "problems": [
@@ -9952,5 +9800,43 @@
         "online_users": 185
       }
     ]
+  },
+  {
+    "timestamp": "2026-10-08T21:00:57.935614",
+    "site": "us",
+    "problems": [
+      {
+        "name": "Median of Two Sorted Arrays",
+        "online_users": 200
+      },
+      {
+        "name": "Longest Palindromic Substring",
+        "online_users": 200
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-10-08T21:00:57.935614",
+    "site": "us",
+    "problems": [
+      {
+        "name": "Median of Two Sorted Arrays",
+        "online_users": 200
+      },
+      {
+        "name": "Longest Palindromic Substring",
+        "online_users": 200
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-10-08T21:20:58.899114",
+    "site": "cn",
+    "problems": []
+  },
+  {
+    "timestamp": "2026-10-08T21:20:58.899114",
+    "site": "cn",
+    "problems": []
   }
 ]
