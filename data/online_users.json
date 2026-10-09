@@ -1,61 +1,5 @@
 [
   {
-    "timestamp": "2026-09-09T17:07:51.508937",
-    "site": "us",
-    "problems": []
-  },
-  {
-    "timestamp": "2026-09-09T17:07:51.508937",
-    "site": "us",
-    "problems": []
-  },
-  {
-    "timestamp": "2026-09-09T17:27:52.105562",
-    "site": "cn",
-    "problems": []
-  },
-  {
-    "timestamp": "2026-09-09T17:27:52.105562",
-    "site": "cn",
-    "problems": []
-  },
-  {
-    "timestamp": "2026-09-09T19:41:31.839571",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Longest Substring Without Repeating Characters",
-        "online_users": 200
-      },
-      {
-        "name": "Median of Two Sorted Arrays",
-        "online_users": 478
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 402
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-09-09T19:41:31.839571",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Longest Substring Without Repeating Characters",
-        "online_users": 200
-      },
-      {
-        "name": "Median of Two Sorted Arrays",
-        "online_users": 478
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 402
-      }
-    ]
-  },
-  {
     "timestamp": "2026-09-09T20:01:32.574123",
     "site": "cn",
     "problems": []
@@ -9670,6 +9614,44 @@
       {
         "name": "Median of Two Sorted Arrays",
         "online_users": 175
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-10-09T19:30:37.784857",
+    "site": "us",
+    "problems": []
+  },
+  {
+    "timestamp": "2026-10-09T19:30:37.784857",
+    "site": "us",
+    "problems": []
+  },
+  {
+    "timestamp": "2026-10-09T19:44:46.794838",
+    "site": "cn",
+    "problems": [
+      {
+        "name": "Add Two Numbers",
+        "online_users": 100
+      },
+      {
+        "name": "Longest Palindromic Substring",
+        "online_users": 99
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-10-09T19:44:46.794838",
+    "site": "cn",
+    "problems": [
+      {
+        "name": "Add Two Numbers",
+        "online_users": 100
+      },
+      {
+        "name": "Longest Palindromic Substring",
+        "online_users": 99
       }
     ]
   }
