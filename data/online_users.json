@@ -1,51 +1,5 @@
 [
   {
-    "timestamp": "2026-09-10T05:07:53.221845",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Add Two Numbers",
-        "online_users": 200
-      },
-      {
-        "name": "Longest Substring Without Repeating Characters",
-        "online_users": 871
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 462
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-09-10T05:07:53.221845",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Add Two Numbers",
-        "online_users": 200
-      },
-      {
-        "name": "Longest Substring Without Repeating Characters",
-        "online_users": 871
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 462
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-09-10T05:27:53.986931",
-    "site": "cn",
-    "problems": []
-  },
-  {
-    "timestamp": "2026-09-10T05:27:53.986931",
-    "site": "cn",
-    "problems": []
-  },
-  {
     "timestamp": "2026-09-10T09:37:15.832704",
     "site": "us",
     "problems": [
@@ -9676,6 +9630,52 @@
       {
         "name": "Longest Palindromic Substring",
         "online_users": 185
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-10-10T09:06:57.584012",
+    "site": "us",
+    "problems": []
+  },
+  {
+    "timestamp": "2026-10-10T09:06:57.584012",
+    "site": "us",
+    "problems": []
+  },
+  {
+    "timestamp": "2026-10-10T09:21:11.715203",
+    "site": "cn",
+    "problems": [
+      {
+        "name": "Add Two Numbers",
+        "online_users": 252
+      },
+      {
+        "name": "Longest Substring Without Repeating Characters",
+        "online_users": 521
+      },
+      {
+        "name": "Longest Palindromic Substring",
+        "online_users": 253
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-10-10T09:21:11.715203",
+    "site": "cn",
+    "problems": [
+      {
+        "name": "Add Two Numbers",
+        "online_users": 252
+      },
+      {
+        "name": "Longest Substring Without Repeating Characters",
+        "online_users": 521
+      },
+      {
+        "name": "Longest Palindromic Substring",
+        "online_users": 253
       }
     ]
   }
