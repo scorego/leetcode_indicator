@@ -1,73 +1,5 @@
 [
   {
-    "timestamp": "2026-10-03T07:32:37.658111",
-    "site": "us",
-    "problems": []
-  },
-  {
-    "timestamp": "2026-10-03T07:32:37.658111",
-    "site": "us",
-    "problems": []
-  },
-  {
-    "timestamp": "2026-10-03T07:52:38.388101",
-    "site": "cn",
-    "problems": []
-  },
-  {
-    "timestamp": "2026-10-03T07:52:38.388101",
-    "site": "cn",
-    "problems": []
-  },
-  {
-    "timestamp": "2026-10-03T12:51:58.132092",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Median of Two Sorted Arrays",
-        "online_users": 200
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 200
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-10-03T12:51:58.132092",
-    "site": "us",
-    "problems": [
-      {
-        "name": "Median of Two Sorted Arrays",
-        "online_users": 200
-      },
-      {
-        "name": "Longest Palindromic Substring",
-        "online_users": 200
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-10-03T13:08:05.940939",
-    "site": "cn",
-    "problems": [
-      {
-        "name": "Longest Substring Without Repeating Characters",
-        "online_users": 265
-      }
-    ]
-  },
-  {
-    "timestamp": "2026-10-03T13:08:05.940939",
-    "site": "cn",
-    "problems": [
-      {
-        "name": "Longest Substring Without Repeating Characters",
-        "online_users": 265
-      }
-    ]
-  },
-  {
     "timestamp": "2026-10-03T17:02:31.569673",
     "site": "us",
     "problems": [
@@ -9202,5 +9134,43 @@
     "timestamp": "2026-11-02T05:28:07.851122",
     "site": "cn",
     "problems": []
+  },
+  {
+    "timestamp": "2026-11-02T13:16:36.300702",
+    "site": "us",
+    "problems": []
+  },
+  {
+    "timestamp": "2026-11-02T13:16:36.300702",
+    "site": "us",
+    "problems": []
+  },
+  {
+    "timestamp": "2026-11-02T13:32:49.579831",
+    "site": "cn",
+    "problems": [
+      {
+        "name": "Longest Substring Without Repeating Characters",
+        "online_users": 424
+      },
+      {
+        "name": "Median of Two Sorted Arrays",
+        "online_users": 155
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-11-02T13:32:49.579831",
+    "site": "cn",
+    "problems": [
+      {
+        "name": "Longest Substring Without Repeating Characters",
+        "online_users": 424
+      },
+      {
+        "name": "Median of Two Sorted Arrays",
+        "online_users": 155
+      }
+    ]
   }
 ]
